@@ -17,28 +17,27 @@ public class Register {
 	
     
 	private void registerUserData() {
-		System.out.println("Ingrese el tipo de id");
-		idType = ProyectoFinal.scanner.next();
-		System.out.println("Ingrese el id");
-		id = ProyectoFinal.scanner.next();
 		ProyectoFinal.scanner.nextLine();
+		System.out.println("Ingrese el tipo de id");
+		idType = ProyectoFinal.scanner.nextLine();
+		System.out.println("Ingrese el id");
+		id = ProyectoFinal.scanner.nextLine();
 		System.out.println("Ingrese su nombre(s)");
 		names = ProyectoFinal.scanner.nextLine();
 		System.out.println("Ingrese su apellido(s)");
 		lastNames = ProyectoFinal.scanner.nextLine();
 		System.out.println("Ingrese su email");
-		email = ProyectoFinal.scanner.next();
+		email = ProyectoFinal.scanner.nextLine();
 		System.out.println("Ingrese su dirección residencial");
-		ProyectoFinal.scanner.nextLine();
 		residenceAddress = ProyectoFinal.scanner.nextLine();
 		System.out.println("Ingrese su ciudad de residencia");
 		residenceCity = ProyectoFinal.scanner.nextLine();
 		System.out.println("Ingrese su teléfono");
-		phone = ProyectoFinal.scanner.next();
+		phone = ProyectoFinal.scanner.nextLine();
 		System.out.println("Ingrese su contraseña");
-		password = ProyectoFinal.scanner.next();
+		password = ProyectoFinal.scanner.nextLine();
 		System.out.println("Confirme su contraseña");
-		confirmPassword = ProyectoFinal.scanner.next();
+		confirmPassword = ProyectoFinal.scanner.nextLine();
 	}
 	
 	private void confirmPassword() {
