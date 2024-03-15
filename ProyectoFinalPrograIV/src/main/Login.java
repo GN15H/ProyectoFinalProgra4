@@ -19,7 +19,7 @@ public class Login {
 		
 		if(loggedUser.isEmpty()) { //if user does not exist
 			System.out.println("Usuario no existente.");
-			System.out.println("-----------------------");
+			System.out.println("------------------------");
 			return false;
 		}
 		 
@@ -28,7 +28,7 @@ public class Login {
 			
 		if(!password.equals(loggedUser.get(0).getPassword())) { //password does not match
 			System.out.println("Contraseña incorrecta");
-			System.out.println("-----------------------");
+			System.out.println("------------------------");
 			return false;
 		}
 		
