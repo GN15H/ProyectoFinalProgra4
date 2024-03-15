@@ -27,7 +27,7 @@ public class Login {
 		password = ProyectoFinal.scanner.next();
 			
 		if(!password.equals(loggedUser.get(0).getPassword())) { //password does not match
-			System.out.println("Contraseña incorrecta");
+			System.out.println("Contraseña incorrecta.");
 			System.out.println("------------------------");
 			return false;
 		}
