@@ -1,27 +1,30 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Scanner;
 
-
+import entities.UserData;
 import modelos.User;
-
+import views.LoginView;
 
 public class ProyectoFinal {
 	
 	public static Scanner scanner = new Scanner (System.in);
-	public static List<User> usersList = new ArrayList<>();
 	
 	public static void showLoginRegisterMenu() {
-		Menu menu = new Menu();
-		menu.menuLoop();
+		//Menu menu = new Menu();
+		//menu.menuLoop();
 		
 	}
 	
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
-		usersList.add(new User("CC", "1089097158", "Cristobal", "Ochoa", "cristobalochoacadavid@gmail.com", "El Dorado", "Pereira", "3202599542", "12345"));
-		showLoginRegisterMenu();
+		UserData userData = new UserData();
+		userData.addUser(new User("CC", "1089097158", "Cristobal", "Ochoa", "cristobalochoacadavid@gmail.com", "El Dorado", "Pereira", "3202599542", "12345"));
+		//RegisterView registerView = new RegisterView();
+		LoginView loginView = new LoginView(userData);
+		//usersList.add(new User("CC", "1089097158", "Cristobal", "Ochoa", "cristobalochoacadavid@gmail.com", "El Dorado", "Pereira", "3202599542", "12345"));
+		/*showLoginRegisterMenu();*/
 		scanner.close();
 	}
 

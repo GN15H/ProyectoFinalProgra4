@@ -1,4 +1,5 @@
 package main;
+import entities.UserData;
 import modelos.User;
 
 
@@ -14,7 +15,7 @@ public class Register {
     private String phone;
     private String password;
     private String confirmPassword;
-	
+	private UserData userData;
     
 	private void registerUserData() {
 		ProyectoFinal.scanner.nextLine();
@@ -53,10 +54,25 @@ public class Register {
 	public void registerUser() {
 		registerUserData();
 		confirmPassword();
-		ProyectoFinal.usersList.add(new User(idType, id, names, lastNames, email, residenceAddress, residenceCity, phone, password));
+		userData.addUser(new User(idType, id, names, lastNames, email, residenceAddress, residenceCity, phone, password));
 	}
 	
-	public Register() {
-		
+	public void registerUser(
+				String idType, 
+				String id, 
+				String names, 
+				String lastNames,
+				String email,
+				String residenceAddress,
+				String residenceCity,
+				String phone,
+				String password
+				) 
+	{
+		userData.addUser(new User(idType, id, names, lastNames, email, residenceAddress, residenceCity, phone, password));
+	}
+	
+	public Register(UserData userData) {
+		this.userData = userData;
 	}
 }

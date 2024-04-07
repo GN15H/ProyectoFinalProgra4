@@ -1,11 +1,14 @@
 package main;
 
+import entities.UserData;
+
 public class Menu {
 	
 	int menuOption = 1;
-
+	private UserData userData;
+	
 	private void handleLogin() {
-		Login login = new Login();
+		Login login = new Login(userData);
 		if(!login.loginUser()) {
 			menuOption = 0;
 		}else {
@@ -14,7 +17,7 @@ public class Menu {
 	}
 	
 	private void handleRegister() {
-		Register register = new Register();
+		Register register = new Register(userData);
 		register.registerUser();
 		System.out.println("Usuario registrado extosamente");
 	}
@@ -53,8 +56,8 @@ public class Menu {
 	}
 	
 	
-	public Menu() {
-	
+	public Menu(UserData userData) {
+		this.userData = userData;
 	}
 	
 }
