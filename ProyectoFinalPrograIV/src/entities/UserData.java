@@ -37,7 +37,7 @@ public class UserData {
 				String residenceCity,
 				String phone,
 				String password) {
-		usersList.add(new User(idType, id, names, lastNames, email, residenceAddress, residenceCity, phone, password));
+		usersList.add(new User(idType, id, names, lastNames, email, residenceAddress, residenceCity, phone, password, UserType.client));
 	}
 	
 	public void addUser(User user) {

@@ -1,5 +1,7 @@
 package main;
 
+import controlador.Login;
+import controlador.Register;
 import entities.UserData;
 
 public class Menu {

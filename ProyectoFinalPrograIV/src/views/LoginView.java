@@ -1,8 +1,11 @@
 package views;
 import java.awt.event.*;
+import java.util.List;
+
 import javax.swing.*;
 import entities.UserData;
-import main.Login;
+import controlador.Login;
+import modelos.User;
 
 public class LoginView  
 {  
@@ -47,11 +50,16 @@ public class LoginView
         loginButton.setBounds(250,350,100,20);
         loginButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-
-        		if(login.verifyUser(usernameTextField.getText(), new String(passwordTextField.getPassword()))) {
+        		if(usernameTextField.getText().isEmpty() || new String(passwordTextField.getPassword()).isEmpty()) {
+        			JOptionPane.showMessageDialog(f, "Tiene campos vacios", "Error", JOptionPane.CLOSED_OPTION);
+        			return;
+        		}
+        		List<User> loggedUser = login.verifyUser(usernameTextField.getText(), new String(passwordTextField.getPassword()));
+        		
+        		if(!loggedUser.isEmpty()) {
         			f.dispose();
         			@SuppressWarnings("unused")
-        			HomeView homeView = new HomeView();
+        			HomeView homeView = new HomeView(loggedUser.get(0));
         		}else {
         			JOptionPane.showMessageDialog(f, "El usuario ingresado es incorrecto o no existe", "Error", JOptionPane.CLOSED_OPTION);
         		}
@@ -83,6 +91,7 @@ public class LoginView
         
         //frame settings
         f.setTitle("Login");
+        f.setResizable(false);
         f.setSize(600,550);  
         f.setLayout(null);  
         f.setVisible(true);  

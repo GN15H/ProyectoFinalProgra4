@@ -1,10 +1,11 @@
-/*package main;
+package controlador;
 
 import modelos.User;
 
 import java.util.List;
 
 import entities.UserData;
+import main.ProyectoFinal;
 
 public class Login {
 	private String username;
@@ -13,7 +14,7 @@ public class Login {
 	private UserData userData;
 	
 	private boolean verifyUser() {
-		//List<User> loggedUser;
+		List<User> loggedUser;
 		System.out.println("Ingrese su nombre de usuario");
 		username = ProyectoFinal.scanner.next();
 		
@@ -37,8 +38,10 @@ public class Login {
 		return true;
 	}
 	
-	public boolean verifyUser(String username, String password) {
+	public boolean verifyUserRAM(String username, String password) {
 		List<User> loggedUser;
+		UserController userController = new UserController();
+		userController.readObjectsFromFile("usuarios.txt");
 		
 		loggedUser = userData.getUser(username);
 		
@@ -55,6 +58,28 @@ public class Login {
 		}
 		
 		return true;
+	}
+	
+	public List<User> verifyUser(String username, String password) {
+		List<User> loggedUser;
+		UserController userController = new UserController();
+		List<User> usersList = userController.readObjectsFromFile("usuarios.txt");
+		
+		loggedUser = userController.getUser(username, usersList);
+		
+		/*if(loggedUser.isEmpty()) { //if user does not exist
+			System.out.println("Usuario no existente.");
+			System.out.println("------------------------");
+			return false;
+		}
+
+		if(!password.equals(loggedUser.get(0).getPassword())) { //password does not match
+			System.out.println("Contraseña incorrecta.");
+			System.out.println("------------------------");
+			return false;
+		}*/
+		
+		return loggedUser;
 	}
 	
 	public boolean loginUser() {
@@ -75,7 +100,7 @@ public class Login {
 		return userExistence;
 	}*/
 	
-	/*public Login(UserData userData) {
+	public Login(UserData userData) {
 		this.userData = userData;
 	}
-}*/
+}

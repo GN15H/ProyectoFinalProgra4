@@ -1,6 +1,11 @@
 package modelos;
 
-public class User {
+import java.io.Serializable;
+import entities.UserType;
+
+public class User implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
     private String idType;
     private String id;
     private String names;
@@ -10,6 +15,7 @@ public class User {
     private String residenceCity;
     private String phone;
     private String password;
+    private UserType userType;
 
     public String getIdType() {
         return idType;
@@ -45,6 +51,10 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+    
+    public UserType getUserType() {
+    	return userType;
     }
 
     // Setters
@@ -84,7 +94,11 @@ public class User {
         this.password = password;
     }
     
-    public User(String idType, String id, String names, String lastNames, String email, String residenceAddress, String residenceCity, String phone, String password) {
+    public void setUserType(UserType userType) {
+    	this.userType = userType;
+    }
+    
+    public User(String idType, String id, String names, String lastNames, String email, String residenceAddress, String residenceCity, String phone, String password, UserType userType) {
         this.idType = idType;
         this.id = id;
         this.names = names;
@@ -94,5 +108,6 @@ public class User {
         this.residenceCity = residenceCity;
         this.phone = phone;
         this.password = password;
+        this.userType = userType;
     }
 }

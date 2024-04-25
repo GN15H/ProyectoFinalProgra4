@@ -1,9 +1,14 @@
-package main;
-/*import entities.UserData;
-import modelos.User;*/
+package controlador;
+
+import java.util.List;
+
+import entities.UserData;
+import entities.UserType;
+import main.ProyectoFinal;
+import modelos.User;
 
 
-/*public class Register {
+public class Register {
 
 	private String idType;
     private String id;
@@ -54,7 +59,8 @@ import modelos.User;*/
 	public void registerUser() {
 		registerUserData();
 		confirmPassword();
-		userData.addUser(new User(idType, id, names, lastNames, email, residenceAddress, residenceCity, phone, password));
+		
+		userData.addUser(new User(idType, id, names, lastNames, email, residenceAddress, residenceCity, phone, password, UserType.client));
 	}
 	
 	public void registerUser(
@@ -69,10 +75,14 @@ import modelos.User;*/
 				String password
 				) 
 	{
-		userData.addUser(new User(idType, id, names, lastNames, email, residenceAddress, residenceCity, phone, password));
+		UserController userController = new UserController();
+		List<User> userList = userController.readObjectsFromFile("usuarios.txt");
+		userList.add(new User(idType, id, names, lastNames, email, residenceAddress, residenceCity, phone, password, UserType.client));
+		userController.storeObjectsToFile("usuarios.txt", userList);
+		userData.addUser(new User(idType, id, names, lastNames, email, residenceAddress, residenceCity, phone, password, UserType.client));
 	}
 	
 	public Register(UserData userData) {
 		this.userData = userData;
 	}
-}*/
+}

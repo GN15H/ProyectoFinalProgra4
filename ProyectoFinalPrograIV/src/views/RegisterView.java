@@ -5,12 +5,15 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import entities.UserData;
-import main.Register;
+import controlador.Register;
 
 public class RegisterView {
+	
 	private UserData userData;
-	final String[] idTypes = {"T.I","C.C"};
-	JFrame f = new JFrame("Register");
+	
+	final String[] idTypes = {"T.I","C.C"}; //list of id types
+	
+	JFrame f = new JFrame("Register"); 
 	JComboBox<String> idTypeField;
 	JTextField idField, namesField, lastNamesField, emailField,
 				residenceAddressField, residenceCityField,
@@ -21,29 +24,30 @@ public class RegisterView {
 	public RegisterView(UserData userData) {	
 		this.userData = userData;
 		
+		//addition of all elements of the frame
 	    addLabels();
 	    addFields();
-	    addButtons();
+	    addButtons();	    
 	    
 	    // Set frame properties
 	    f.setTitle("Register");
 	    f.setSize(600, 1000);
+	    f.setResizable(false);
 	    f.setLayout(null);
 	    f.setVisible(true);
-    }  
+    }//RegisterView  
 	
 	private boolean registerHandler() {
 		String passwordString = new String(passwordField.getPassword());
 		String confirmPasswordString = new String(confirmPasswordField.getPassword());
-		
+				
 		if(!passwordString.equals(confirmPasswordString)) {
 			JOptionPane.showMessageDialog(f, "Las contraseñas no coinciden", "Error", JOptionPane.CLOSED_OPTION);
 			return false;
 		}
-		
-		
+			
 		return true;
-	}
+	}//registerHandler
 	
 	private void addButtons() {
 		JButton registerButton, loginButton;
