@@ -11,8 +11,8 @@ import modelos.User;
 
 public class HomeView {
 	private User user;
-	JMenu bookings, rooms, users;  
-    JMenuItem book, seeBooks, booksHistory, seeUsers, seeRooms;  
+	//JMenu bookings, rooms, users;  
+    //JMenuItem book, seeBooks, booksHistory, seeUsers, searchRooms;  
     JFrame homeView;
     JMenuBar mainMenuBar;
 	
@@ -32,46 +32,42 @@ public class HomeView {
 	
 	private void addMenuBarItems() {
 		mainMenuBar=new JMenuBar();  
-        bookings =new JMenu("Reservas");  
-        rooms = new JMenu("Habitaciones");  
-        users = new JMenu("Usuarios");
-        book = new JMenuItem("Realizar reserva");  
-        seeBooks = new JMenuItem("Ver reservas");  
-        booksHistory =new JMenuItem("Historial de reservas");  
-        seeUsers = new JMenuItem("Ver usuarios");  
-        seeRooms = new JMenuItem("Ver habitaciones");  
-        bookings.add(book); bookings.add(seeBooks); bookings.add(booksHistory);  
-        rooms.add(seeRooms);  
-        //menu.add(submenu);  
-        mainMenuBar.add(bookings);
-        mainMenuBar.add(rooms);
-        users.add(seeUsers);
+        
+
         if(user.getUserType() == UserType.admin) {
-       	 mainMenuBar.add(users);        	 
+       	 	addAdminFunctionalities();
+        }else {
+        	addUserFunctionalities();
         }
 		
+
         
-        book.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                goToView(BookView.class);
-            }
-        });
-        
-        seeBooks.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                goToView(BookingsView.class);
-            }
-        });
-        
-        booksHistory.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                goToView(BookingsHistory.class);
-            }
-        });
-        
-        seeRooms.addActionListener(new ActionListener() {
+		homeView.setJMenuBar(mainMenuBar); 
+	}
+	
+	void addAdminFunctionalities() {
+		JMenu rooms = new JMenu("Habitaciones");
+		JMenu users = new JMenu("Usuarios");
+		JMenuItem seeRooms = new JMenuItem("Buscar habitación");
+		JMenuItem createRoom = new JMenuItem("Crear habitación");
+		JMenuItem seeUsers = new JMenuItem("Ver usuarios");
+		
+		rooms.add(seeRooms); rooms.add(createRoom);
+		users.add(seeUsers);
+		
+		mainMenuBar.add(rooms);
+		mainMenuBar.add(users);
+		
+		seeRooms.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 goToView(RoomsView.class);
+            }
+        });
+        
+        //action listener for seeBooks button
+        createRoom.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                goToView(CreateRoom.class);
             }
         });
         
@@ -81,13 +77,56 @@ public class HomeView {
             }
         });
         
-		homeView.setJMenuBar(mainMenuBar); 
+	}
+		
+	void addUserFunctionalities() {
+		JMenu rooms = new JMenu("Habitaciones"); 
+		JMenu bookings =new JMenu("Reservas");  
+		JMenuItem searchRooms = new JMenuItem("Buscar habitaciones"); 
+		JMenuItem book = new JMenuItem("Realizar reserva");  
+		JMenuItem seeBooks = new JMenuItem("Ver reservas");  
+		JMenuItem booksHistory =new JMenuItem("Historial de reservas");  
+        
+        bookings.add(book); bookings.add(seeBooks); bookings.add(booksHistory);  
+        rooms.add(searchRooms);  
+        mainMenuBar.add(bookings);
+        mainMenuBar.add(rooms);
+        
+        book.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                goToView(BookView.class);
+            }
+        });
+        
+        //action listener for seeBooks button
+        seeBooks.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                goToView(BookingsView.class);
+            }
+        });
+        
+        //action listener for booksHistory button
+        booksHistory.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                goToView(BookingsHistory.class);
+            }
+        });
+        
+        //action listener for seeRooms button
+        searchRooms.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                goToView(RoomsView.class);
+            }
+        });
+		
 	}
 	
+	//function that receives a class (view) and instances it
 	private <T> void goToView(Class<T> view) {
 		try {
 			Constructor<T> constructor = view.getDeclaredConstructor();
 			//homeView.dispose();
+			@SuppressWarnings("unused")
 			T newView = constructor.newInstance();
 		} catch (Exception e) {
 			e.printStackTrace();
