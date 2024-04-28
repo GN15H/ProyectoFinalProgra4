@@ -57,11 +57,15 @@ public class LoginView
         		List<User> loggedUser = login.verifyUser(usernameTextField.getText(), new String(passwordTextField.getPassword()));
         		
         		if(!loggedUser.isEmpty()) {
-        			f.dispose();
-        			@SuppressWarnings("unused")
-        			HomeView homeView = new HomeView(loggedUser.get(0));
+        			if(loggedUser.get(0).getPassword().equals(new String(passwordTextField.getPassword()))) {
+        				f.dispose();
+        				@SuppressWarnings("unused")
+        				HomeView homeView = new HomeView(loggedUser.get(0));        				
+        			}else {
+        				JOptionPane.showMessageDialog(f, "Contraseña incorrecta", "Error", JOptionPane.CLOSED_OPTION);
+        			}
         		}else {
-        			JOptionPane.showMessageDialog(f, "El usuario ingresado es incorrecto o no existe", "Error", JOptionPane.CLOSED_OPTION);
+        			JOptionPane.showMessageDialog(f, "El usuario ingresado existe", "Error", JOptionPane.CLOSED_OPTION);
         		}
         	}
         });

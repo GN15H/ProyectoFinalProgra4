@@ -40,7 +40,6 @@ public class HomeView {
         	addUserFunctionalities();
         }
 		
-
         
 		homeView.setJMenuBar(mainMenuBar); 
 	}
