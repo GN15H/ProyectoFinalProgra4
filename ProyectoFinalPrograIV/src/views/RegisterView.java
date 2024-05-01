@@ -8,6 +8,8 @@ import entities.UserData;
 import controlador.Register;
 
 public class RegisterView {
+	private final int k = 4;
+
 	
 	private UserData userData;
 	
@@ -31,7 +33,7 @@ public class RegisterView {
 	    
 	    // Set frame properties
 	    f.setTitle("Register");
-	    f.setSize(600, 1000);
+	    f.setSize(600, 650);
 	    f.setResizable(false);
 	    f.setLayout(null);
 	    f.setVisible(true);
@@ -54,7 +56,7 @@ public class RegisterView {
 		
 		//registerbutton definition and settings
 		registerButton = new JButton("Registrarse");
-		registerButton.setBounds(210,850,180, 20);
+		registerButton.setBounds(210,570-(10*k),180, 20);
 		registerButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		if(!registerHandler()) {
@@ -83,7 +85,7 @@ public class RegisterView {
 		
 		//loginbutton definition and settings
 		loginButton = new JButton("Iniciar Sesión");
-		loginButton.setBounds(210,880,180, 20);
+		loginButton.setBounds(210,600-(10*k),180, 20);
 		loginButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		f.dispose();
@@ -99,43 +101,43 @@ public class RegisterView {
 	
 	private void addFields() {
 		idTypeField = new JComboBox<String>(idTypes);  
-		idTypeField.setBounds(200, 90, 200, 20);
+		idTypeField.setBounds(200, 90-(10*k), 200, 20);
 		f.add(idTypeField);
 
 		idField = new JTextField();
-		idField.setBounds(200, 170, 200, 20);
+		idField.setBounds(200, 140-(10*k), 200, 20);
 		f.add(idField);
 
 		namesField = new JTextField();
-		namesField.setBounds(200, 250, 200, 20);
+		namesField.setBounds(200, 190-(10*k), 200, 20);
 		f.add(namesField);
 
 		lastNamesField = new JTextField();
-		lastNamesField.setBounds(200, 330, 200, 20);
+		lastNamesField.setBounds(200, 240-(10*k), 200, 20);
 		f.add(lastNamesField);
 
 		emailField = new JTextField();
-		emailField.setBounds(200, 410, 200, 20);
+		emailField.setBounds(200, 290-(10*k), 200, 20);
 		f.add(emailField);
 
 		residenceAddressField = new JTextField();
-		residenceAddressField.setBounds(200, 490, 200, 20);
+		residenceAddressField.setBounds(200, 340-(10*k), 200, 20);
 		f.add(residenceAddressField);
 
 		residenceCityField = new JTextField();
-		residenceCityField.setBounds(200, 570, 200, 20);
+		residenceCityField.setBounds(200, 390-(10*k), 200, 20);
 		f.add(residenceCityField);
 
 		phoneField = new JTextField();
-		phoneField.setBounds(200, 650, 200, 20);
+		phoneField.setBounds(200, 440-(10*k), 200, 20);
 		f.add(phoneField);
 
 		passwordField = new JPasswordField();
-		passwordField.setBounds(200, 730, 200, 20);
+		passwordField.setBounds(200, 490-(10*k), 200, 20);
 		f.add(passwordField);
 
 		confirmPasswordField = new JPasswordField();
-		confirmPasswordField.setBounds(200, 810, 200, 20);
+		confirmPasswordField.setBounds(200, 540-(10*k), 200, 20);
 		f.add(confirmPasswordField);
 
 	}
@@ -149,43 +151,43 @@ public class RegisterView {
 	
 		 // Definition and settings of idType label
 		 idTypeLabel = new JLabel("Tipo de identificación");
-		 idTypeLabel.setBounds(200, 70, 150, 20);
+		 idTypeLabel.setBounds(200, 70-(10*k), 150, 20);
 		
 		 // Definition and settings of id label
 		 idLabel = new JLabel("ID");
-		 idLabel.setBounds(200, 150, 150, 20);
+		 idLabel.setBounds(200, 120-(10*k), 150, 20);
 		
 		 // Definition and settings of names label
 		 namesLabel = new JLabel("Nombres");
-		 namesLabel.setBounds(200, 230, 150, 20);
+		 namesLabel.setBounds(200, 170-(10*k), 150, 20);
 		
 		 // Definition and settings of lastNames label
 		 lastNamesLabel = new JLabel("Apellidos");
-		 lastNamesLabel.setBounds(200, 310, 150, 20);
+		 lastNamesLabel.setBounds(200, 220-(10*k), 150, 20);
 		
 		 // Definition and settings of email label
 		 emailLabel = new JLabel("Correo electrónico");
-		 emailLabel.setBounds(200, 390, 150, 20);
+		 emailLabel.setBounds(200, 270-(10*k), 150, 20);
 		
 		 // Definition and settings of residenceAddress label
 		 residenceAddressLabel = new JLabel("Dirección de residencia");
-		 residenceAddressLabel.setBounds(200, 470, 150, 20);
+		 residenceAddressLabel.setBounds(200, 320-(10*k), 150, 20);
 		
 		 // Definition and settings of residenceCity label
 		 residenceCityLabel = new JLabel("Ciudad de residencia");
-		 residenceCityLabel.setBounds(200, 550, 150, 20);
+		 residenceCityLabel.setBounds(200, 370-(10*k), 150, 20);
 		
 		 // Definition and settings of phone label
 		 phoneLabel = new JLabel("Teléfono");
-		 phoneLabel.setBounds(200, 630, 150, 20);
+		 phoneLabel.setBounds(200, 420-(10*k), 150, 20);
 		
 		 // Definition and settings of password label
 		 passwordLabel = new JLabel("Contraseña");
-		 passwordLabel.setBounds(200, 710, 150, 20);
+		 passwordLabel.setBounds(200, 470-(10*k), 150, 20);
 		
 		 // Definition and settings of confirmPassword label
 		 confirmPasswordLabel = new JLabel("Confirmar contraseña");
-		 confirmPasswordLabel.setBounds(200, 790, 150, 20);
+		 confirmPasswordLabel.setBounds(200, 520-(10*k), 150, 20);
 		 
 		 f.add(idTypeLabel);
 	     f.add(idLabel);
