@@ -1,99 +1,109 @@
 package views;
 import java.awt.event.*;
-import java.util.List;
 
 import javax.swing.*;
 import entities.UserData;
 import controlador.Login;
-import modelos.User;
+import controlador.UserController;
+import modelos.LoginStates;
 
 public class LoginView  
 {  
-	private Login login;
 	private UserData userData;
+	private UserController userController = new UserController();
+	private Login login = new Login();
+	private JFrame f;
+	private JLabel usernameLabel, passwordLabel, loginLabel;
+	private JTextField usernameTextField;
+	private JPasswordField passwordTextField;
+	private JButton loginButton, registerButton;
 	
-     public LoginView(UserData userData){  
-    	this.userData = userData;
-    	login = new Login(this.userData);
-    	System.out.println(this.userData.getUsersList().get(0).getEmail() + " " + this.userData.getUsersList().get(0).getPassword());
-    	
-        JFrame f= new JFrame();  
-        
-        //declaration of login and password labels
-        JLabel usernameLabel, passwordLabel, loginLabel;
-        
-        //definition and settings of username label
+	private void addLabels() {        
         loginLabel = new JLabel("Inicio de sesión");
         loginLabel.setBounds(250, 100, 100, 20);
         
-        //definition and settings of username label
         usernameLabel = new JLabel("Usuario");
         usernameLabel.setBounds(200, 180, 100, 20);
         
-        //definition and settings of password label
         passwordLabel = new JLabel("Contraseña");
         passwordLabel.setBounds(200, 260, 100, 20);
-
         
-        //definition and settings of username textfield
-        JTextField usernameTextField = new JTextField();
-        usernameTextField.setBounds(200, 200, 200,30);
-        
-        
-        //definition and settings of password textfield
-        JPasswordField passwordTextField = new JPasswordField();
-        passwordTextField.setBounds(200, 280, 200,30);
-        
-        
-        //definition and settings of password textfield
-        JButton loginButton = new JButton("Ingresar");
-        loginButton.setBounds(250,350,100,20);
-        loginButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		if(usernameTextField.getText().isEmpty() || new String(passwordTextField.getPassword()).isEmpty()) {
-        			JOptionPane.showMessageDialog(f, "Tiene campos vacios", "Error", JOptionPane.CLOSED_OPTION);
-        			return;
-        		}
-        		List<User> loggedUser = login.verifyUser(usernameTextField.getText(), new String(passwordTextField.getPassword()));
-        		
-        		if(!loggedUser.isEmpty()) {
-        			if(loggedUser.get(0).getPassword().equals(new String(passwordTextField.getPassword()))) {
-        				f.dispose();
-        				@SuppressWarnings("unused")
-        				HomeView homeView = new HomeView(loggedUser.get(0));        				
-        			}else {
-        				JOptionPane.showMessageDialog(f, "Contraseña incorrecta", "Error", JOptionPane.CLOSED_OPTION);
-        			}
-        		}else {
-        			JOptionPane.showMessageDialog(f, "El usuario ingresado existe", "Error", JOptionPane.CLOSED_OPTION);
-        		}
-        	}
-        });
-        
-        //definition and settings of password textfield
-        JButton registerButton = new JButton("Registrarse");
-        registerButton.setBounds(240,380,120,20);
-        registerButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		f.dispose();
-        		@SuppressWarnings("unused")
-				RegisterView registerView = new RegisterView(userData);
-        	}
-        		
-        });
-        
-        
-        
-        //adding elements to frame
-        f.add(usernameTextField);
-        f.add(passwordTextField);
-        f.add(loginButton);
-        f.add(registerButton);
         f.add(usernameLabel);
         f.add(passwordLabel);
         f.add(loginLabel);
+
+	}
+	
+	private void addTextFields() {
+        usernameTextField = new JTextField();
+        usernameTextField.setBounds(200, 200, 200,30);
         
-        //frame settings
+        passwordTextField = new JPasswordField();
+        passwordTextField.setBounds(200, 280, 200,30);
+        
+        f.add(usernameTextField);
+        f.add(passwordTextField);
+	}
+	
+	
+	
+	private void addButtons() {
+		 loginButton = new JButton("Ingresar");
+	        loginButton.setBounds(250,350,100,20);
+	        loginButton.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        		loginHandler();
+	        	}
+	        });
+	        
+	        registerButton = new JButton("Registrarse");
+	        registerButton.setBounds(240,380,120,20);
+	        registerButton.addActionListener(new ActionListener() {
+	        	public void actionPerformed(ActionEvent e) {
+	        		f.dispose();
+	        		@SuppressWarnings("unused")
+					RegisterView registerView = new RegisterView(userData);
+	        	}	
+	        });
+	        
+
+	        f.add(loginButton);
+	        f.add(registerButton);
+	}
+	
+	private void loginHandler() {
+		LoginStates loginState = login.verifyUser(usernameTextField.getText(), new String(passwordTextField.getPassword()));
+		
+		switch (loginState) {
+			case emptyFields:
+				JOptionPane.showMessageDialog(f, "Tiene campos vacios", "Error", JOptionPane.CLOSED_OPTION);
+				return;
+			case wrongUser:
+				JOptionPane.showMessageDialog(f, "El usuario ingresado no existe", "Error", JOptionPane.CLOSED_OPTION);
+				return;
+			case wrongPassword:
+				JOptionPane.showMessageDialog(f, "Contraseña incorrecta", "Error", JOptionPane.CLOSED_OPTION);
+				return;
+			case verified:
+				f.dispose();
+				@SuppressWarnings("unused")
+				HomeView homeView = new HomeView(userController.getElementById(usernameTextField.getText()).get());
+		default:
+			break;
+				
+		}
+	}
+	
+     public LoginView(UserData userData){  
+    	this.userData = userData;
+    	System.out.println(this.userData.getUsersList().get(0).getEmail() + " " + this.userData.getUsersList().get(0).getPassword());
+    	
+        f = new JFrame();  
+        
+        addLabels();
+        addTextFields();
+        addButtons();
+
         f.setTitle("Login");
         f.setResizable(false);
         f.setSize(600,550);  

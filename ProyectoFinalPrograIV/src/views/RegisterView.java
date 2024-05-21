@@ -10,7 +10,6 @@ import controlador.Register;
 public class RegisterView {
 	private final int k = 4;
 
-	
 	private UserData userData;
 	
 	final String[] idTypes = {"T.I","C.C"}; //list of id types
@@ -37,7 +36,7 @@ public class RegisterView {
 	    f.setResizable(false);
 	    f.setLayout(null);
 	    f.setVisible(true);
-    }//RegisterView  
+    } 
 	
 	private boolean registerHandler() {
 		String passwordString = new String(passwordField.getPassword());
@@ -49,7 +48,7 @@ public class RegisterView {
 		}
 			
 		return true;
-	}//registerHandler
+	}
 	
 	private void addButtons() {
 		JButton registerButton, loginButton;

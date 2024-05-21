@@ -1,6 +1,5 @@
 package main;
 
-import controlador.Login;
 import controlador.Register;
 import entities.UserData;
 
@@ -10,12 +9,12 @@ public class Menu {
 	private UserData userData;
 	
 	private void handleLogin() {
-		Login login = new Login(userData);
+		/*Login login = new Login();
 		if(!login.loginUser()) {
 			menuOption = 0;
 		}else {
 			System.out.println("Usuario logueado correctamente");
-		}
+		}*/
 	}
 	
 	private void handleRegister() {
