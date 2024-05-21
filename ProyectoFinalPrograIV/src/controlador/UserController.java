@@ -15,8 +15,6 @@ public class UserController extends CrudController<User, String> {
 		usersList = super.getAll();
 	}
 
-
-
 	@Override 
 	public List<User> getAll(){
 		return this.usersList;

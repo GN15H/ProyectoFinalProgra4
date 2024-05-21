@@ -1,6 +1,8 @@
 package modelos;
 
 import java.io.Serializable;
+import java.util.Objects;
+
 import entities.UserType;
 
 public class User implements Serializable {
@@ -109,5 +111,26 @@ public class User implements Serializable {
         this.phone = phone;
         this.password = password;
         this.userType = userType;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        User other = (User) obj;
+        return Objects.equals(idType, other.idType) &&
+               Objects.equals(id, other.id) &&
+               Objects.equals(names, other.names) &&
+               Objects.equals(lastNames, other.lastNames) &&
+               Objects.equals(email, other.email) &&
+               Objects.equals(residenceAddress, other.residenceAddress) &&
+               Objects.equals(residenceCity, other.residenceCity) &&
+               Objects.equals(phone, other.phone) &&
+               Objects.equals(password, other.password) &&
+               Objects.equals(userType, other.userType);
     }
 }

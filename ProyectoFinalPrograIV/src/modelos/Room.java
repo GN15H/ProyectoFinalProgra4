@@ -1,12 +1,23 @@
 package modelos;
 
-public class Room {
+import java.io.Serializable;
+import java.util.Objects;
+
+public class Room implements Serializable{
+	private static final long serialVersionUID = 1L;
 
 	private int id;
 	private int capacity;
 	private double price;
 	private String comfort;
 	private RoomType roomType;
+	
+	public Room(int capacity, double price, String comfort, RoomType roomType) {
+		this.capacity = capacity;
+		this.price = price;
+		this.comfort = comfort;
+		this.roomType = roomType;
+	}
 	
 	public int getId() {
 		return id;
@@ -38,4 +49,20 @@ public class Room {
 	public void setRoomType(RoomType roomType) {
 		this.roomType = roomType;
 	}
+	
+	@Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Room other = (Room) obj;
+        return id == other.id &&
+               capacity == other.capacity &&
+               Double.compare(other.price, price) == 0 &&
+               Objects.equals(comfort, other.comfort) &&
+               Objects.equals(roomType, other.roomType);
+    }
 }

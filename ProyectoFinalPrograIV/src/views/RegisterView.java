@@ -61,7 +61,7 @@ public class RegisterView {
         		if(!registerHandler()) {
         			return;
         		}
-        		Register register = new Register(userData);
+        		Register register = new Register();
         		register.registerUser(
         				idTypeField.getItemAt(idTypeField.getSelectedIndex()),
         				idField.getText(),

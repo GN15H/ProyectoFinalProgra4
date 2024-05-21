@@ -1,15 +1,32 @@
 package modelos;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Objects;
 
-public class Booking {
-
+public class Booking implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private int id;
 	private int guestAmount;
-	private Date arrivalDate;
-	private Date departureDate;
+	private LocalDate arrivalDate;
+	private LocalDate departureDate;
 	private User user;
 	private Room room;
+	
+	public Booking(
+			int guestAmount, 
+			LocalDate arrivalDate, 
+			LocalDate departureDate, 
+			User user, 
+			Room room) 
+	{
+		this.guestAmount = guestAmount;
+		this.arrivalDate = arrivalDate;
+		this.departureDate = departureDate;
+		this.user = user;
+		this.room = room;
+	}
 	
 	public int getId() {
 		return id;
@@ -23,16 +40,16 @@ public class Booking {
 	public void setGuestAmount(int guestAmount) {
 		this.guestAmount = guestAmount;
 	}
-	public Date getArrivalDate() {
+	public LocalDate getArrivalDate() {
 		return arrivalDate;
 	}
-	public void setArrivalDate(Date arrivalDate) {
+	public void setArrivalDate(LocalDate arrivalDate) {
 		this.arrivalDate = arrivalDate;
 	}
-	public Date getDepartureDate() {
+	public LocalDate getDepartureDate() {
 		return departureDate;
 	}
-	public void setDepartureDate(Date departureDate) {
+	public void setDepartureDate(LocalDate departureDate) {
 		this.departureDate = departureDate;
 	}
 	public User getUser() {
@@ -47,4 +64,21 @@ public class Booking {
 	public void setRoom(Room room) {
 		this.room = room;
 	}
+	
+	@Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Booking other = (Booking) obj;
+        return id == other.id &&
+               guestAmount == other.guestAmount &&
+               Objects.equals(arrivalDate, other.arrivalDate) &&
+               Objects.equals(departureDate, other.departureDate) &&
+               Objects.equals(user, other.user) &&
+               Objects.equals(room, other.room);
+    }
 }
