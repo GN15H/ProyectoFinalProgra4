@@ -8,6 +8,10 @@ import javax.swing.*;
 
 import entities.UserType;
 import modelos.User;
+import views.adminViews.CreateRoom;
+import views.adminViews.UsersView;
+import views.userViews.BookView;
+import views.userViews.BookingsHistory;
 
 public class HomeView {
 	private User user;
@@ -123,10 +127,19 @@ public class HomeView {
 	//function that receives a class (view) and instances it
 	private <T> void goToView(Class<T> view) {
 		try {
-			Constructor<T> constructor = view.getDeclaredConstructor();
-			//homeView.dispose();
+			Constructor<T> constructor;
 			@SuppressWarnings("unused")
-			T newView = constructor.newInstance();
+			T newView;
+			
+			try {
+				constructor = view.getDeclaredConstructor(User.class);
+				newView = constructor.newInstance(user);
+			} catch (NoSuchMethodException e) {
+				constructor = view.getDeclaredConstructor();
+				newView = constructor.newInstance();
+			}
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

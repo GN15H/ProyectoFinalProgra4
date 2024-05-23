@@ -3,9 +3,9 @@ import java.awt.event.*;
 
 import javax.swing.*;
 import entities.UserData;
+import modelos.states.LoginStates;
 import controlador.Login;
 import controlador.UserController;
-import modelos.LoginStates;
 
 public class LoginView  
 {  

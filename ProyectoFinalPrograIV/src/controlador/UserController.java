@@ -3,8 +3,8 @@ package controlador;
 import java.util.List;
 import java.util.Optional;
 
+import modelos.Constants;
 import modelos.User;
-import views.Constants;
 
 public class UserController extends CrudController<User, String> {
 	

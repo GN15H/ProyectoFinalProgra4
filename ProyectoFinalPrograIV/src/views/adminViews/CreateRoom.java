@@ -1,14 +1,23 @@
-package views;
+package views.adminViews;
 
 import java.awt.event.*;
 
 import javax.swing.*;
 
+import controlador.RoomValidator;
+import controlador.RoomsController;
+import modelos.Room;
+import modelos.RoomType;
+import modelos.states.CreateRoomStates;
+
 
 public class CreateRoom {
 	private final int k = 4;
 	
-	final String[] roomTypes = {"Simple","Multiple"}; //list of id types
+	private RoomValidator roomValidator = new RoomValidator();
+	private RoomsController roomsController = new RoomsController();
+	
+	final String[] roomTypes = {RoomType.simple.getValue(),RoomType.multiple.getValue()}; //list of id types
 	
 	JFrame f = new JFrame("Register"); 
 	JComboBox<String> roomTypeField;
@@ -17,38 +26,55 @@ public class CreateRoom {
 	
 	public CreateRoom() {	
 		
-		//addition of all elements of the frame
 	    addLabels();
 	    addFields();
 	    addButtons();	    
 	    
-	    // Set frame properties
 	    f.setTitle("Crear Habitación");
 	    f.setSize(600, 500);
 	    f.setResizable(false);
 	    f.setLayout(null);
 	    f.setVisible(true);
     } 
-	
-	private boolean registerHandler() {
-
-		return true;
+		
+	private void createRoomHandler() {
+		CreateRoomStates state = roomValidator.validate(roomTypeField.getItemAt(roomTypeField.getSelectedIndex()),
+				capacity.getText(),
+				price.getText(),
+				comfort.getText());
+		
+		switch(state) {
+			case emptyFields:
+				JOptionPane.showMessageDialog(f, "Tiene campos vacios", "Error", JOptionPane.CLOSED_OPTION);
+				return;
+			case wrongFormat:
+				JOptionPane.showMessageDialog(f, "Tiene campos con valores no válidos", "Error", JOptionPane.CLOSED_OPTION);
+				return;
+			case verified:
+				int capacityNum = Integer.parseInt(capacity.getText());
+				double priceNum = Double.parseDouble(price.getText());
+				RoomType roomTypeEnum = roomTypeField.getItemAt(roomTypeField.getSelectedIndex()).equals(new String("Simple")) ? RoomType.simple : RoomType.multiple;
+				roomsController.addElement(new Room(capacityNum, priceNum, comfort.getText(), roomTypeEnum));
+				JOptionPane.showMessageDialog(f, "Habitación creada correctamente", "Éxito", JOptionPane.CLOSED_OPTION);
+				f.dispose();
+				return;
+			default:
+				break;
+		}
 	}
 	
 	private void addButtons() {
 		JButton registerButton, loginButton;
 		
-		//registerbutton definition and settings
-		registerButton = new JButton("Registrarse");
+		registerButton = new JButton("Crear");
 		registerButton.setBounds(210,380-(10*k),180, 20);
 		registerButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-    			f.dispose();
+    			createRoomHandler();
         	}
         		
         });
 		
-		//loginbutton definition and settings
 		loginButton = new JButton("Salir");
 		loginButton.setBounds(210,430-(10*k),180, 20);
 		loginButton.addActionListener(new ActionListener() {
@@ -83,22 +109,16 @@ public class CreateRoom {
 	
 	private void addLabels() {
 		JLabel roomTypeLabel, capacityLabel, priceLabel, comfortLabel;
-	    
-	    //JTextField
-	
-		 // Definition and settings of idType label
+
 		roomTypeLabel = new JLabel("Tipo de habitación");
 		roomTypeLabel.setBounds(200, 70-(10*k), 150, 20);
 		
-		 // Definition and settings of id label
 		capacityLabel = new JLabel("Capacidad");
 		capacityLabel.setBounds(200, 120-(10*k), 150, 20);
 		
-		 // Definition and settings of names label
 		priceLabel = new JLabel("Precio");
 		priceLabel.setBounds(200, 170-(10*k), 150, 20);
 		
-		 // Definition and settings of lastNames label
 		comfortLabel = new JLabel("Comodidades");
 		comfortLabel.setBounds(200, 220-(10*k), 150, 20);
 

@@ -1,4 +1,4 @@
-package views;
+package views.userViews;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;

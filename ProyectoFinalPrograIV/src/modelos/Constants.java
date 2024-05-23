@@ -1,4 +1,4 @@
-package views;
+package modelos;
 
 public class Constants {
 	private Constants() {}

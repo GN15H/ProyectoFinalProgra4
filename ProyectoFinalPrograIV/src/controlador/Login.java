@@ -1,11 +1,9 @@
 package controlador;
 
-import modelos.LoginStates;
 import modelos.User;
+import modelos.states.LoginStates;
 
 import java.util.Optional;
-
-
 
 public class Login {
 	boolean successfulLogin = false;
@@ -15,7 +13,6 @@ public class Login {
 		if(username.isEmpty() || password.isEmpty()) {
 			return LoginStates.emptyFields;
 		}
-		
 		
 		Optional<User> user = userController.getElementById(username);
 		

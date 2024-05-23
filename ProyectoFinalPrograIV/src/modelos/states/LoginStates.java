@@ -1,4 +1,4 @@
-package modelos;
+package modelos.states;
 
 public enum LoginStates {
 	emptyFields("Tiene campos vacios"),

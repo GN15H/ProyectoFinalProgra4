@@ -1,8 +1,8 @@
 package modelos;
 
 public enum RoomType{
-	simple("simple"),
-	multiple("multiple");
+	simple("Simple"),
+	multiple("Multiple");
 	
 	private final String value;
 	

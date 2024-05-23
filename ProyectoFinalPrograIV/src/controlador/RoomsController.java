@@ -3,8 +3,8 @@ package controlador;
 import java.util.List;
 import java.util.Optional;
 
+import modelos.Constants;
 import modelos.Room;
-import views.Constants;
 
 public class RoomsController extends CrudController<Room, Integer>{
 

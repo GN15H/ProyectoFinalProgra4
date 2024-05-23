@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import modelos.Booking;
-import views.Constants;
+import modelos.Constants;
 
 public class BookingsController extends CrudController<Booking, Integer> {
 	
