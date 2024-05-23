@@ -1,23 +1,23 @@
 package controlador;
 
-import modelos.states.CreateRoomStates;
+import modelos.states.ValidatorStates;
 
 public class RoomValidator {
 
 	RoomsController roomsController = new RoomsController();
 	
-	public CreateRoomStates validate(String roomType, String capacity, String price, String comfort) {
+	public ValidatorStates validate(String roomType, String capacity, String price, String comfort) {
 		if(roomType.isEmpty() || capacity.isEmpty() || price.isEmpty() || comfort.isEmpty()) {
-			return CreateRoomStates.emptyFields;
+			return ValidatorStates.emptyFields;
 		}
 		
 		
 		if(!isNumeric(capacity) || !isDecimal(price)) {
-			return CreateRoomStates.wrongFormat;
+			return ValidatorStates.wrongFormat;
 		}
 		
 		
-		return CreateRoomStates.verified;
+		return ValidatorStates.verified;
 	}
 	
 	private boolean isNumeric(String str) {

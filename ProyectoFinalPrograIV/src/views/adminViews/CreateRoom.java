@@ -8,7 +8,7 @@ import controlador.RoomValidator;
 import controlador.RoomsController;
 import modelos.Room;
 import modelos.RoomType;
-import modelos.states.CreateRoomStates;
+import modelos.states.ValidatorStates;
 
 
 public class CreateRoom {
@@ -19,7 +19,7 @@ public class CreateRoom {
 	
 	final String[] roomTypes = {RoomType.simple.getValue(),RoomType.multiple.getValue()}; //list of id types
 	
-	JFrame f = new JFrame("Register"); 
+	JFrame f = new JFrame("CreateRoom"); 
 	JComboBox<String> roomTypeField;
 	JTextField capacity, price, comfort;
 	
@@ -38,7 +38,7 @@ public class CreateRoom {
     } 
 		
 	private void createRoomHandler() {
-		CreateRoomStates state = roomValidator.validate(roomTypeField.getItemAt(roomTypeField.getSelectedIndex()),
+		ValidatorStates state = roomValidator.validate(roomTypeField.getItemAt(roomTypeField.getSelectedIndex()),
 				capacity.getText(),
 				price.getText(),
 				comfort.getText());

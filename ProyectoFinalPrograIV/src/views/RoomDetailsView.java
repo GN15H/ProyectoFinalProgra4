@@ -1,5 +1,8 @@
 package views;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -8,6 +11,7 @@ import entities.UserType;
 import modelos.Room;
 import modelos.RoomType;
 import modelos.User;
+import views.userViews.BookView;
 
 public class RoomDetailsView {
 	private Room room;
@@ -42,6 +46,13 @@ public class RoomDetailsView {
 	private void addButtons() {
 		bookButton = new JButton("Reservar");
 		bookButton.setBounds(200,200,100,20);
+		bookButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+    			f.dispose();
+    			BookView bookView = new BookView(room,user);
+        	}
+        		
+        });
 		
 		editButton = new JButton("Editar");
 		editButton.setBounds(200,200,100,20);
