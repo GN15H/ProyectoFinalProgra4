@@ -3,6 +3,7 @@ package views.adminViews;
 import java.awt.event.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.*;
 
@@ -16,6 +17,8 @@ import controlador.IValidator;
 public class CreateRoom {
 	private final int k = 4;
 	
+	private Optional<Room> roomToUpdate;
+	
 	private IValidator<Room> roomValidator = new RoomValidator();
 	private RoomsController roomsController = new RoomsController();
 	
@@ -26,7 +29,8 @@ public class CreateRoom {
 	JTextField capacity, price, comfort;
 	
 	
-	public CreateRoom() {	
+	public CreateRoom(Optional<Room> roomToUpdate) {	
+		this.roomToUpdate = roomToUpdate;
 		
 	    addLabels();
 	    addFields();
@@ -53,8 +57,13 @@ public class CreateRoom {
 				return;
 			case verified:
 				Room room = roomValidator.parseObject(objElements);
-				roomsController.addElement(room);
-				JOptionPane.showMessageDialog(f, "Habitación creada correctamente", "Éxito", JOptionPane.CLOSED_OPTION);
+				if(roomToUpdate.isPresent()) {
+					roomsController.updateElement(roomToUpdate.get(), room);
+					JOptionPane.showMessageDialog(f, "Habitación editada correctamente", "Éxito", JOptionPane.CLOSED_OPTION);
+				}else {
+					roomsController.addElement(room);
+					JOptionPane.showMessageDialog(f, "Habitación creada correctamente", "Éxito", JOptionPane.CLOSED_OPTION);					
+				}
 				f.dispose();
 				return;
 			default:
@@ -62,10 +71,11 @@ public class CreateRoom {
 		}
 	}
 	
+	
 	private void addButtons() {
 		JButton registerButton, loginButton;
 		
-		registerButton = new JButton("Crear");
+		registerButton = new JButton(roomToUpdate.isPresent() ? "Editar" : "Crear");
 		registerButton.setBounds(210,380-(10*k),180, 20);
 		registerButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -90,19 +100,30 @@ public class CreateRoom {
 	private void addFields() {
 		roomTypeField = new JComboBox<String>(roomTypes);  
 		roomTypeField.setBounds(200, 90-(10*k), 200, 20);
-		f.add(roomTypeField);
+		
 
 		capacity = new JTextField();
 		capacity.setBounds(200, 140-(10*k), 200, 20);
-		f.add(capacity);
+		capacity.setText(null);
 
 		price = new JTextField();
 		price.setBounds(200, 190-(10*k), 200, 20);
-		f.add(price);
 
 		comfort = new JTextField();
 		comfort.setBounds(200, 240-(10*k), 200, 20);
+		
+		if(roomToUpdate.isPresent()) {
+			roomTypeField.setSelectedItem(roomToUpdate.get().getRoomType().getValue());
+			capacity.setText(String.valueOf(roomToUpdate.get().getCapacity()));
+			price.setText(String.valueOf(roomToUpdate.get().getPrice()));
+			comfort.setText(roomToUpdate.get().getComfort());
+		}
+		
+		
+		f.add(roomTypeField);
+		f.add(capacity);
 		f.add(comfort);
+		f.add(price);
 
 	}
 	

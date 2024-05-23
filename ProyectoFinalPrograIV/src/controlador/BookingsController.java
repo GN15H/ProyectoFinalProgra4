@@ -35,6 +35,13 @@ public class BookingsController extends CrudController<Booking, Integer> {
 				.filter(e -> e.getId() == id)
 				.findFirst();
 	}
+	
+	@Override
+	public void updateElement(Booking booking, Booking updatedBooking) {
+		updatedBooking.setId(booking.getId());
+		super.updateElement(booking, updatedBooking);
+		
+	}
 
 	private boolean isDateWithinRange(LocalDate date, LocalDate startDate, LocalDate endDate) {
         return !date.isBefore(startDate) && !date.isAfter(endDate);

@@ -34,5 +34,12 @@ public class RoomsController extends CrudController<Room, Integer>{
 				.findFirst();
 	}
 	
+	@Override
+	public void updateElement(Room room, Room updatedRoom) {
+		updatedRoom.setId(room.getId());
+		super.updateElement(room, updatedRoom);
+		
+	}
+	
 
 }

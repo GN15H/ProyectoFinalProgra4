@@ -3,6 +3,7 @@ package views;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Constructor;
+import java.util.Optional;
 
 import javax.swing.*;
 
@@ -131,10 +132,13 @@ public class HomeView {
 			@SuppressWarnings("unused")
 			T newView;
 			
-			try {
+			if (view == CreateRoom.class) {
+				constructor = view.getDeclaredConstructor(Optional.class);
+				newView = constructor.newInstance(Optional.empty());
+			}else if (view == RoomsView.class) {
 				constructor = view.getDeclaredConstructor(User.class);
 				newView = constructor.newInstance(user);
-			} catch (NoSuchMethodException e) {
+			}else {
 				constructor = view.getDeclaredConstructor();
 				newView = constructor.newInstance();
 			}

@@ -2,15 +2,19 @@ package views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Optional;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
+import controlador.RoomsController;
 import entities.UserType;
 import modelos.Room;
 import modelos.RoomType;
 import modelos.User;
+import views.adminViews.CreateRoom;
 import views.userViews.BookView;
 
 public class RoomDetailsView {
@@ -19,6 +23,7 @@ public class RoomDetailsView {
 	private JFrame f;
 	private JLabel idRoomLabel, capacityLabel, priceLabel, comfortLabel, roomTypeLabel;
 	private JButton bookButton, editButton, deleteButton, verifyButton;
+	private RoomsController roomsController = new RoomsController();
 	
 	private void addLabels() {
 		idRoomLabel = new JLabel("Habitación " + room.getId());
@@ -56,9 +61,24 @@ public class RoomDetailsView {
 		
 		editButton = new JButton("Editar");
 		editButton.setBounds(200,200,100,20);
+		editButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+    			f.dispose();
+    			CreateRoom createRoom = new CreateRoom(Optional.of(room));
+        	}
+        		
+        });
 		
 		deleteButton = new JButton("Borrar");
 		deleteButton.setBounds(200,230,100,20);
+		deleteButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+    			f.dispose();
+    			roomsController.deleteElement(room);
+    			JOptionPane.showMessageDialog(f, "Habitación borrada", "Éxito", JOptionPane.CLOSED_OPTION);
+        	}
+        		
+        });
 		
 		verifyButton = new JButton("Disponibilidad");
 		verifyButton.setBounds(200,270,100,20);

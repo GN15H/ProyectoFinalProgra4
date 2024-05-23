@@ -38,7 +38,8 @@ public class RoomsView {
         
         // Add ListSelectionListener to handle selection changes
         jList.addListSelectionListener(new ListSelectionListener() {
-            @Override
+            @SuppressWarnings("unused")
+			@Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
                     Room selectedRoom = jList.getSelectedValue();
