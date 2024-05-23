@@ -1,6 +1,8 @@
 package views.adminViews;
 
 import java.awt.event.*;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -9,12 +11,12 @@ import controlador.RoomsController;
 import modelos.Room;
 import modelos.RoomType;
 import modelos.states.ValidatorStates;
-
+import controlador.IValidator;
 
 public class CreateRoom {
 	private final int k = 4;
 	
-	private RoomValidator roomValidator = new RoomValidator();
+	private IValidator<Room> roomValidator = new RoomValidator();
 	private RoomsController roomsController = new RoomsController();
 	
 	final String[] roomTypes = {RoomType.simple.getValue(),RoomType.multiple.getValue()}; //list of id types
@@ -38,11 +40,10 @@ public class CreateRoom {
     } 
 		
 	private void createRoomHandler() {
-		ValidatorStates state = roomValidator.validate(roomTypeField.getItemAt(roomTypeField.getSelectedIndex()),
-				capacity.getText(),
-				price.getText(),
-				comfort.getText());
+		List<String> elements = Arrays.asList(roomTypeField.getItemAt(roomTypeField.getSelectedIndex()),capacity.getText(),price.getText(),comfort.getText());
+		List<Object> objElements = Arrays.asList(roomTypeField.getItemAt(roomTypeField.getSelectedIndex()),capacity.getText(),price.getText(),comfort.getText());
 		
+		ValidatorStates state = roomValidator.validate(elements);
 		switch(state) {
 			case emptyFields:
 				JOptionPane.showMessageDialog(f, "Tiene campos vacios", "Error", JOptionPane.CLOSED_OPTION);
@@ -51,10 +52,8 @@ public class CreateRoom {
 				JOptionPane.showMessageDialog(f, "Tiene campos con valores no válidos", "Error", JOptionPane.CLOSED_OPTION);
 				return;
 			case verified:
-				int capacityNum = Integer.parseInt(capacity.getText());
-				double priceNum = Double.parseDouble(price.getText());
-				RoomType roomTypeEnum = roomTypeField.getItemAt(roomTypeField.getSelectedIndex()).equals(new String("Simple")) ? RoomType.simple : RoomType.multiple;
-				roomsController.addElement(new Room(capacityNum, priceNum, comfort.getText(), roomTypeEnum));
+				Room room = roomValidator.parseObject(objElements);
+				roomsController.addElement(room);
 				JOptionPane.showMessageDialog(f, "Habitación creada correctamente", "Éxito", JOptionPane.CLOSED_OPTION);
 				f.dispose();
 				return;

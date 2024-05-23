@@ -2,8 +2,8 @@ package views.userViews;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,6 +18,7 @@ import modelos.Booking;
 import modelos.Room;
 import modelos.User;
 import modelos.states.ValidatorStates;
+import controlador.IValidator;
 
 public class BookView {
 
@@ -27,7 +28,7 @@ public class BookView {
 	private User user;
 	
 	private BookingsController bookingsController = new BookingsController();
-	private BookingValidator bookingValidator = new BookingValidator();
+	private IValidator<Booking> bookingValidator = new BookingValidator();
 	
 	
 	JFrame f = new JFrame("Register"); 
@@ -51,10 +52,10 @@ public class BookView {
     } 
 		
 	private void createRoomHandler() {
-		ValidatorStates state = bookingValidator.validate(
-				guestAmountField.getText(),
-				arrivalDateField.getText(),
-				departureDateField.getText());
+		List<String> elements = Arrays.asList(guestAmountField.getText(), arrivalDateField.getText(), departureDateField.getText());
+		List<Object> objElements = Arrays.asList(guestAmountField.getText(), arrivalDateField.getText(), departureDateField.getText(), user, room);
+		
+		ValidatorStates state = bookingValidator.validate(elements);
 		
 		switch(state) {
 			case emptyFields:
@@ -64,12 +65,8 @@ public class BookView {
 				JOptionPane.showMessageDialog(f, "Tiene campos con valores no válidos", "Error", JOptionPane.CLOSED_OPTION);
 				return;
 			case verified:
-				int guestAmountNum = Integer.parseInt(guestAmountField.getText());
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-				LocalDate arrivalDate = LocalDate.parse(arrivalDateField.getText(), formatter);
-				LocalDate departureDate = LocalDate.parse(departureDateField.getText(), formatter);
-				bookingsController.addElement(new Booking(guestAmountNum, arrivalDate, departureDate, user, room));
-				
+				Booking booking = bookingValidator.parseObject(objElements);
+				bookingsController.addElement(booking);
 				JOptionPane.showMessageDialog(f, "Reserva creada correctamente", "Éxito", JOptionPane.CLOSED_OPTION);
 				f.dispose();
 				return;
