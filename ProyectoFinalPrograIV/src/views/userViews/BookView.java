@@ -89,7 +89,7 @@ public class BookView {
 	private void addButtons() {
 		JButton registerButton, loginButton;
 		
-		registerButton = new JButton("Crear");
+		registerButton = new JButton(booking.isPresent() ? "Editar" : "Crear");
 		registerButton.setBounds(210,380-(10*k),180, 20);
 		registerButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {

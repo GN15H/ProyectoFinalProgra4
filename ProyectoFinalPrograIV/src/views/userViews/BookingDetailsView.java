@@ -23,8 +23,8 @@ public class BookingDetailsView {
 	private BookingsController bookingsController = new BookingsController();
 	
 	private void addLabels() {
-		idBookingLabel = new JLabel("Reserva: " + booking.getId());
-		idBookingLabel.setBounds(180,20,80,20);
+		idBookingLabel = new JLabel("Reserva: " + booking.getId() + " " + (booking.getArrivalDate().isBefore(LocalDate.now()) ? "Vencida" : "Activa"));
+		idBookingLabel.setBounds(180,20,120,20);
 		
 		guestAmountLabel = new JLabel("Huespedes : " + booking.getGuestAmount());
 		guestAmountLabel.setBounds(180,60,80,20);
@@ -63,19 +63,22 @@ public class BookingDetailsView {
         		
         });
 		
-		deleteButton = new JButton("Borrar");
+		deleteButton = new JButton("Cancelar");
 		deleteButton.setBounds(200,230,100,20);
 		deleteButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
     			f.dispose();
     			bookingsController.deleteElement(booking);
-    			JOptionPane.showMessageDialog(f, "Reserva borrada", "Éxito", JOptionPane.CLOSED_OPTION);
+    			JOptionPane.showMessageDialog(f, "Reserva cancelada", "Éxito", JOptionPane.CLOSED_OPTION);
         	}
         		
         });
 		
+		System.out.println("llegada " + booking.getArrivalDate());
+		System.out.println("actual " + LocalDate.now());
+		System.out.println(booking.getArrivalDate().isBefore(LocalDate.now()));
 		
-		if(booking.getArrivalDate().isBefore(LocalDate.now())) {
+		if(booking.getArrivalDate().isAfter(LocalDate.now())) {
 			f.add(editButton);
 			f.add(deleteButton);
 		}
