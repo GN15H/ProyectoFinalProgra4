@@ -12,8 +12,6 @@ import javax.swing.JOptionPane;
 
 import controlador.BookingsController;
 import modelos.Booking;
-import modelos.User;
-
 
 public class BookingDetailsView {
 	private Booking booking;
@@ -74,9 +72,6 @@ public class BookingDetailsView {
         		
         });
 		
-		System.out.println("llegada " + booking.getArrivalDate());
-		System.out.println("actual " + LocalDate.now());
-		System.out.println(booking.getArrivalDate().isBefore(LocalDate.now()));
 		
 		if(booking.getArrivalDate().isAfter(LocalDate.now())) {
 			f.add(editButton);

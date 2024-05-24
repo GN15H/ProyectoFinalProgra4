@@ -97,4 +97,9 @@ public class Booking implements Serializable {
                Objects.equals(user, other.user) &&
                Objects.equals(room, other.room);
     }
+	
+	@Override
+	public String toString() {
+		return this.id +" "+this.arrivalDate+" "+this.departureDate;
+	}
 }

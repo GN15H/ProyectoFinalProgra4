@@ -7,9 +7,9 @@ import java.util.List;
 import modelos.Booking;
 import modelos.User;
 import modelos.Room;
-import modelos.states.ValidatorStates;
+import modelos.states.BookingStates;
 
-public class BookingValidator implements IValidator<Booking> {
+public class BookingValidator implements IValidator<Booking, BookingStates> {
 	
 	private final int GUEST_AMOUNT = 0;
 	private final int ARRIVAL_DATE = 1;
@@ -18,29 +18,43 @@ public class BookingValidator implements IValidator<Booking> {
 	private final int ROOM = 4;
 	
 	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+	private final RoomsController roomsController = new RoomsController();
+	
 	
 	@Override
-	public ValidatorStates validate(List<String> elements) {
+	public BookingStates validate(List<String> elements) {
 		String guestAmount = elements.get(GUEST_AMOUNT);
 		String arrivalDate = elements.get(ARRIVAL_DATE);
 		String departureDate = elements.get(DEPARTURE_DATE);
 		
+		//campos vacios
 		if(guestAmount.isEmpty() || arrivalDate.isEmpty() || departureDate.isEmpty()) {
-			return ValidatorStates.emptyFields;
+			return BookingStates.emptyFields;
 		}
 		
+		//cantidad de huespedes no es numero o las fechas no tienen el formato
 		if(!isNumeric(guestAmount) || !isDate(arrivalDate) || !isDate(departureDate)) {
-			return ValidatorStates.wrongFormat;
+			return BookingStates.wrongFormat;
 		}
 		
 		LocalDate arrivalDateObj = LocalDate.parse((String) elements.get(ARRIVAL_DATE), formatter);
 		LocalDate departureDateObj = LocalDate.parse((String) elements.get(DEPARTURE_DATE), formatter); 
 		
-		if(departureDateObj.isBefore(arrivalDateObj)) {
-			return ValidatorStates.wrongFormat;
+		//fecha de salida antes de la de llegada o la de llegada antes que el día presente
+		if(departureDateObj.isBefore(arrivalDateObj) || arrivalDateObj.isBefore(LocalDate.now())) {
+			return BookingStates.invalidDate;
 		}
 		
-		return ValidatorStates.verified;
+		if(!roomsController.isRoomAvailable(roomsController.getElementById(Integer.parseInt( elements.get(ROOM))).get(), arrivalDateObj, departureDateObj)) {
+			return BookingStates.notAvailable;
+		}
+		
+		if(Integer.parseInt(elements.get(GUEST_AMOUNT)) > roomsController.getElementById(Integer.parseInt( elements.get(ROOM))).get().getCapacity()) {
+			return BookingStates.invalidGuestAmount;
+		}
+		
+		
+		return BookingStates.verified;
 	}
 	
 	@Override

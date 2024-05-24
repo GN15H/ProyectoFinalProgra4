@@ -19,7 +19,7 @@ import controlador.BookingsController;
 import modelos.Booking;
 import modelos.Room;
 import modelos.User;
-import modelos.states.ValidatorStates;
+import modelos.states.BookingStates;
 import controlador.IValidator;
 
 public class BookView {
@@ -31,7 +31,6 @@ public class BookView {
 	private Optional<Booking> booking;
 	
 	private BookingsController bookingsController = new BookingsController();
-	private IValidator<Booking> bookingValidator = new BookingValidator();
 	
 	
 	JFrame f = new JFrame("Register"); 
@@ -56,10 +55,11 @@ public class BookView {
     } 
 		
 	private void createRoomHandler() {
-		List<String> elements = Arrays.asList(guestAmountField.getText(), arrivalDateField.getText(), departureDateField.getText());
+		List<String> elements = Arrays.asList(guestAmountField.getText(), arrivalDateField.getText(), departureDateField.getText(), String.valueOf(user.getId()),String.valueOf(room.getId()));
 		List<Object> objElements = Arrays.asList(guestAmountField.getText(), arrivalDateField.getText(), departureDateField.getText(), user, room);
-		
-		ValidatorStates state = bookingValidator.validate(elements);
+		IValidator<Booking, BookingStates> bookingValidator = new BookingValidator();
+
+		BookingStates state = bookingValidator.validate(elements);
 		
 		switch(state) {
 			case emptyFields:
@@ -67,6 +67,15 @@ public class BookView {
 				return;
 			case wrongFormat:
 				JOptionPane.showMessageDialog(f, "Tiene campos con valores no válidos", "Error", JOptionPane.CLOSED_OPTION);
+				return;
+			case invalidDate:
+				JOptionPane.showMessageDialog(f, BookingStates.invalidDate.getValue(), "Error", JOptionPane.CLOSED_OPTION);
+				return;
+			case invalidGuestAmount:
+				JOptionPane.showMessageDialog(f, BookingStates.invalidGuestAmount.getValue(),"Error", JOptionPane.CLOSED_OPTION);
+				return;
+			case notAvailable:
+				JOptionPane.showMessageDialog(f, "Habitación no disponible para esta fecha", "Error", JOptionPane.CLOSED_OPTION);
 				return;
 			case verified:
 				Booking bookingObj = bookingValidator.parseObject(objElements);
@@ -142,11 +151,11 @@ public class BookView {
 		guestAmountLabel = new JLabel("Cantidad huespedes");
 		guestAmountLabel.setBounds(200, 120-(10*k), 150, 20);
 		
-		arrivalDateLabel = new JLabel("Fecha de llegada");
-		arrivalDateLabel.setBounds(200, 170-(10*k), 150, 20);
+		arrivalDateLabel = new JLabel("Fecha de llegada yyyy/MM/dd");
+		arrivalDateLabel.setBounds(200, 170-(10*k), 200, 20);
 		
-		departureDateLabel = new JLabel("Fecha de salida");
-		departureDateLabel.setBounds(200, 220-(10*k), 150, 20);
+		departureDateLabel = new JLabel("Fecha de salida yyyy/MM/dd");
+		departureDateLabel.setBounds(200, 220-(10*k), 200, 20);
 
 	    f.add(guestAmountLabel);
 	    f.add(arrivalDateLabel);

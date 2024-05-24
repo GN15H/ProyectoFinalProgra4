@@ -5,30 +5,30 @@ import java.util.List;
 
 import modelos.Room;
 import modelos.RoomType;
-import modelos.states.ValidatorStates;
+import modelos.states.RoomCreationStates;
 
-public class RoomValidator implements IValidator<Room>{
+public class RoomValidator implements IValidator<Room, RoomCreationStates>{
 	private final int ROOM_TYPE = 0;
 	private final int CAPACITY = 1;
 	private final int PRICE = 2;
 	private final int COMFORT = 3;
 	
 	@Override
-	public ValidatorStates validate(List<String> elements) {
+	public RoomCreationStates validate(List<String> elements) {
 		String roomType = elements.get(ROOM_TYPE);
 		String capacity = elements.get(CAPACITY);
 		String price = elements.get(PRICE);
 		String comfort = elements.get(COMFORT);
 		
 		if(roomType.isEmpty() || capacity.isEmpty() || price.isEmpty() || comfort.isEmpty()) {
-			return ValidatorStates.emptyFields;
+			return RoomCreationStates.emptyFields;
 		}
 		
 		if(!isNumeric(capacity) || !isDecimal(price)) {
-			return ValidatorStates.wrongFormat;
+			return RoomCreationStates.wrongFormat;
 		}
 		
-		return ValidatorStates.verified;
+		return RoomCreationStates.verified;
 	}
 	
 	@Override

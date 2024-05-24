@@ -11,7 +11,7 @@ import controlador.RoomValidator;
 import controlador.RoomsController;
 import modelos.Room;
 import modelos.RoomType;
-import modelos.states.ValidatorStates;
+import modelos.states.RoomCreationStates;
 import controlador.IValidator;
 
 public class CreateRoom {
@@ -19,7 +19,7 @@ public class CreateRoom {
 	
 	private Optional<Room> roomToUpdate;
 	
-	private IValidator<Room> roomValidator = new RoomValidator();
+	private IValidator<Room, RoomCreationStates> roomValidator = new RoomValidator();
 	private RoomsController roomsController = new RoomsController();
 	
 	final String[] roomTypes = {RoomType.simple.getValue(),RoomType.multiple.getValue()}; //list of id types
@@ -47,7 +47,7 @@ public class CreateRoom {
 		List<String> elements = Arrays.asList(roomTypeField.getItemAt(roomTypeField.getSelectedIndex()),capacity.getText(),price.getText(),comfort.getText());
 		List<Object> objElements = Arrays.asList(roomTypeField.getItemAt(roomTypeField.getSelectedIndex()),capacity.getText(),price.getText(),comfort.getText());
 		
-		ValidatorStates state = roomValidator.validate(elements);
+		RoomCreationStates state = roomValidator.validate(elements);
 		switch(state) {
 			case emptyFields:
 				JOptionPane.showMessageDialog(f, "Tiene campos vacios", "Error", JOptionPane.CLOSED_OPTION);

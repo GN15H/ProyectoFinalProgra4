@@ -73,4 +73,9 @@ public class Room implements Serializable{
                Objects.equals(comfort, other.comfort) &&
                Objects.equals(roomType, other.roomType);
     }
+	
+	@Override
+	public String toString() {
+		return String.valueOf(this.id);
+	}
 }

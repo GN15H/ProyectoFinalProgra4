@@ -1,14 +1,13 @@
 package modelos.states;
 
-public enum ValidatorStates {
+public enum RoomCreationStates {
 	emptyFields("Tiene campos vacios"),
 	wrongFormat("Tiene campos con valores no validos"),
-	notAvailable("Habitación no disponible"),
 	verified("Inicio de sesión exitoso");
 	
 	private final String value;
 	
-	ValidatorStates(String value){
+	RoomCreationStates(String value){
 		this.value = value;
 	}
 	
@@ -16,4 +15,3 @@ public enum ValidatorStates {
 		return value;
 	}
 }
-
