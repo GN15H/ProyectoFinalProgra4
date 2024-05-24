@@ -52,7 +52,8 @@ public class RoomDetailsView {
 		bookButton = new JButton("Reservar");
 		bookButton.setBounds(200,200,100,20);
 		bookButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
+        	@SuppressWarnings("unused")
+			public void actionPerformed(ActionEvent e) {
     			f.dispose();
     			BookView bookView = new BookView(room,user);
         	}
@@ -62,7 +63,8 @@ public class RoomDetailsView {
 		editButton = new JButton("Editar");
 		editButton.setBounds(200,200,100,20);
 		editButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
+        	@SuppressWarnings("unused")
+			public void actionPerformed(ActionEvent e) {
     			f.dispose();
     			CreateRoom createRoom = new CreateRoom(Optional.of(room));
         	}

@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.*;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.*;
@@ -25,7 +26,8 @@ public class RoomsView {
 
         // Create a list of Room objects
         List<Room> roomList = roomsController.getAll();
-
+        roomList.sort(Comparator.comparingDouble(Room::getId));
+        
         // Create the JList with a DefaultListModel
         DefaultListModel<Room> listModel = new DefaultListModel<>();
         for (Room room : roomList) {

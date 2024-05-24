@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import modelos.Booking;
 import modelos.Constants;
+import modelos.User;
 
 public class BookingsController extends CrudController<Booking, Integer> {
 	
@@ -41,6 +42,12 @@ public class BookingsController extends CrudController<Booking, Integer> {
 		updatedBooking.setId(booking.getId());
 		super.updateElement(booking, updatedBooking);
 		
+	}
+	
+	public List<Booking> getUserBookings(User user){
+		return bookingsList.stream()
+				.filter(e -> e.getUser().getId().equals(user.getId()))
+				.toList();
 	}
 
 	private boolean isDateWithinRange(LocalDate date, LocalDate startDate, LocalDate endDate) {

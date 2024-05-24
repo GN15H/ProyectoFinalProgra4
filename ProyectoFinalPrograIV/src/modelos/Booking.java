@@ -28,6 +28,22 @@ public class Booking implements Serializable {
 		this.room = room;
 	}
 	
+	public Booking(
+			int id,
+			int guestAmount, 
+			LocalDate arrivalDate, 
+			LocalDate departureDate, 
+			User user, 
+			Room room) 
+	{
+		this.id = id;
+		this.guestAmount = guestAmount;
+		this.arrivalDate = arrivalDate;
+		this.departureDate = departureDate;
+		this.user = user;
+		this.room = room;
+	}
+	
 	public int getId() {
 		return id;
 	}

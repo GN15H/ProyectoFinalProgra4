@@ -91,7 +91,7 @@ public class HomeView {
 		JMenuItem seeBooks = new JMenuItem("Ver reservas");  
 		JMenuItem booksHistory =new JMenuItem("Historial de reservas");  
         
-        bookings.add(book); bookings.add(seeBooks); bookings.add(booksHistory);  
+        /*bookings.add(book);*/ bookings.add(seeBooks); bookings.add(booksHistory);  
         rooms.add(searchRooms);  
         mainMenuBar.add(bookings);
         mainMenuBar.add(rooms);
@@ -136,6 +136,10 @@ public class HomeView {
 				constructor = view.getDeclaredConstructor(Optional.class);
 				newView = constructor.newInstance(Optional.empty());
 			}else if (view == RoomsView.class) {
+				constructor = view.getDeclaredConstructor(User.class);
+				newView = constructor.newInstance(user);
+			} else if(view == BookingsView.class) {
+				System.out.println("ver reservas");
 				constructor = view.getDeclaredConstructor(User.class);
 				newView = constructor.newInstance(user);
 			}else {
