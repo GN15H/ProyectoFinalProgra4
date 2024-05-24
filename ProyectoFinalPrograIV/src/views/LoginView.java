@@ -2,14 +2,12 @@ package views;
 import java.awt.event.*;
 
 import javax.swing.*;
-import entities.UserData;
 import modelos.states.LoginStates;
 import controlador.Login;
 import controlador.UserController;
 
 public class LoginView  
 {  
-	private UserData userData;
 	private UserController userController = new UserController();
 	private Login login = new Login();
 	private JFrame f;
@@ -62,7 +60,7 @@ public class LoginView
 	        	public void actionPerformed(ActionEvent e) {
 	        		f.dispose();
 	        		@SuppressWarnings("unused")
-					RegisterView registerView = new RegisterView(userData);
+					RegisterView registerView = new RegisterView();
 	        	}	
 	        });
 	        
@@ -94,9 +92,7 @@ public class LoginView
 		}
 	}
 	
-     public LoginView(UserData userData){  
-    	this.userData = userData;
-    	System.out.println(this.userData.getUsersList().get(0).getEmail() + " " + this.userData.getUsersList().get(0).getPassword());
+     public LoginView(){  
     	
         f = new JFrame();  
         

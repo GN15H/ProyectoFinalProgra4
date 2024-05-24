@@ -1,7 +1,6 @@
-package entities;
+package modelos;
 
-
-public enum UserType{
+public enum UserType {
 	admin("Administrador"),
 	client("Cliente");
 	
@@ -14,5 +13,4 @@ public enum UserType{
 	public String getValue() {
 		return value;
 	}
-	
 }

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import javax.swing.*;
 
-import entities.UserType;
+import modelos.UserType;
 import modelos.User;
 import views.adminViews.CreateRoom;
 import views.adminViews.UsersView;

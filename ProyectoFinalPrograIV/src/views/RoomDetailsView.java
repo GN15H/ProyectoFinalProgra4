@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import controlador.RoomsController;
-import entities.UserType;
+import modelos.UserType;
 import modelos.Room;
 import modelos.RoomType;
 import modelos.User;

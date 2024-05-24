@@ -1,6 +1,6 @@
 package controlador;
 
-import entities.UserType;
+import modelos.UserType;
 import modelos.User;
 
 

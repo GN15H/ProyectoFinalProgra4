@@ -3,8 +3,6 @@ package modelos;
 import java.io.Serializable;
 import java.util.Objects;
 
-import entities.UserType;
-
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	

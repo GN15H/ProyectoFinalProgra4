@@ -3,14 +3,11 @@ package views;
 import java.awt.event.*;
 
 import javax.swing.*;
-
-import entities.UserData;
 import controlador.Register;
 
 public class RegisterView {
 	private final int k = 4;
 
-	private UserData userData;
 	
 	final String[] idTypes = {"T.I","C.C"}; //list of id types
 	
@@ -22,8 +19,7 @@ public class RegisterView {
 	JPasswordField passwordField, confirmPasswordField;
 	
 	
-	public RegisterView(UserData userData) {	
-		this.userData = userData;
+	public RegisterView() {	
 		
 		//addition of all elements of the frame
 	    addLabels();
@@ -77,7 +73,7 @@ public class RegisterView {
     			JOptionPane.showMessageDialog(f, "Usuario creado correctamente", "Registro Exitoso", JOptionPane.CLOSED_OPTION);
     			f.dispose();
     			@SuppressWarnings("unused")
-				LoginView loginView = new LoginView(userData);
+				LoginView loginView = new LoginView();
         	}
         		
         });
@@ -89,7 +85,7 @@ public class RegisterView {
         	public void actionPerformed(ActionEvent e) {
         		f.dispose();
         		@SuppressWarnings("unused")
-				LoginView loginView = new LoginView(userData);
+				LoginView loginView = new LoginView();
         	}
         		
         });
