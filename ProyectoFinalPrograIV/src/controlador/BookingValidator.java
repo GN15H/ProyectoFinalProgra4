@@ -30,7 +30,6 @@ public class BookingValidator extends IValidator<Booking, BookingStates> {
 			return BookingStates.emptyFields;
 		}
 		
-		
 		if(invalidFormat(guestAmount, arrivalDate, departureDate)) {
 			return BookingStates.wrongFormat;
 		}

@@ -18,14 +18,14 @@ public class RoomsView {
 	User user;
 	RoomsController roomsController = new RoomsController();
 	
-	public RoomsView(User user) {
+	public RoomsView(User user, List<Room> roomList) {
 		this.user = user;
 		
 		JFrame frame = new JFrame("Rooms View");
         frame.setSize(600, 400);
 
         // Create a list of Room objects
-        List<Room> roomList = roomsController.getAll();
+        //List<Room> roomList = roomsController.getAll();
         roomList.sort(Comparator.comparingDouble(Room::getId));
         
         // Create the JList with a DefaultListModel

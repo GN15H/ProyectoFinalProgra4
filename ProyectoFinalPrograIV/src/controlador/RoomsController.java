@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import main.ProyectoFinal;
 import modelos.Booking;
 import modelos.Constants;
 import modelos.Room;
@@ -46,25 +47,42 @@ public class RoomsController extends CrudController<Room, Integer>{
 		
 	}
 	
-	public List<Room> getRoomsByCapacity(int capacity){
-		return roomsList.stream()
-				.filter(e -> e.getCapacity() >= capacity)
-				.collect(Collectors.toCollection(ArrayList::new));
-	}
-	
-	public List<Room> getRoomsByRoomType(RoomType roomType) {
-		return roomsList.stream()
-				.filter(e -> e.getRoomType() == roomType)
-				.collect(Collectors.toCollection(ArrayList::new));
-	}
+	private List<Room> getRoomsByCapacity(int capacity, List<Room> list) {
+        return list.stream()
+                .filter(e -> e.getCapacity() >= capacity)
+                .collect(Collectors.toList());
+    }
 
-	public List<Room> getAvailableRoomsByDate(LocalDate arrivalDate, LocalDate departureDate) {
+    private List<Room> getRoomsByRoomType(RoomType roomType, List<Room> list) {
+        return list.stream()
+                .filter(e -> e.getRoomType() == roomType)
+                .collect(Collectors.toList());
+    }
+
+    private List<Room> getRoomsByPrice(double price, List<Room> list) {
+        return list.stream()
+                .filter(e -> e.getPrice() >= price)
+                .collect(Collectors.toList());
+    }
+
+	private List<Room> getAvailableRoomsByDate(LocalDate arrivalDate, LocalDate departureDate) {
 		BookingsController bookingsController = new BookingsController();
 		List<Booking> bookings = bookingsController.getBookingsByDate(arrivalDate, departureDate);
 		List<Room> bookedRoomsByDate = bookings.stream().map(Booking::getRoom).collect(Collectors.toCollection(ArrayList::new));
 		List<Room> freeRooms =  roomsList;
 		freeRooms.removeAll(bookedRoomsByDate);
 		return freeRooms;
+	}
+	
+	public List<Room> getFilteredRooms(Room room){
+		List<Room> filteredRooms = roomsList;
+		ProyectoFinal.printArray(filteredRooms);
+		filteredRooms = getRoomsByRoomType(room.getRoomType(), filteredRooms);
+		ProyectoFinal.printArray(filteredRooms);
+		filteredRooms = getRoomsByCapacity(room.getCapacity(), filteredRooms);
+		ProyectoFinal.printArray(filteredRooms);
+		filteredRooms = getRoomsByPrice(room.getPrice(), filteredRooms);
+		return filteredRooms;
 	}
 	
 	public boolean isRoomAvailable(Room room, LocalDate arrivalDate, LocalDate departureDate) {

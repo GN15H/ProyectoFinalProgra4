@@ -3,16 +3,19 @@ package views;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Constructor;
+import java.util.List;
 import java.util.Optional;
 
 import javax.swing.*;
 
+import controlador.RoomsController;
 import modelos.UserType;
 import modelos.User;
 import views.adminViews.CreateRoom;
 import views.adminViews.UsersView;
 import views.userViews.BookView;
 import views.userViews.BookingsHistory;
+import views.userViews.RoomFilterView;
 
 public class HomeView {
 	private User user;
@@ -119,7 +122,7 @@ public class HomeView {
         //action listener for seeRooms button
         searchRooms.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                goToView(RoomsView.class);
+                goToView(RoomFilterView.class);
             }
         });
 		
@@ -136,6 +139,10 @@ public class HomeView {
 				constructor = view.getDeclaredConstructor(Optional.class);
 				newView = constructor.newInstance(Optional.empty());
 			}else if (view == RoomsView.class) {
+				RoomsController roomsController = new RoomsController();
+				constructor = view.getDeclaredConstructor(User.class, List.class);
+				newView = constructor.newInstance(user, roomsController.getAll());
+			}else if(view == RoomFilterView.class) {
 				constructor = view.getDeclaredConstructor(User.class);
 				newView = constructor.newInstance(user);
 			} else if(view == BookingsView.class) {
