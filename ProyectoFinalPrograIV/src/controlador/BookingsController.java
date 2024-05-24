@@ -50,7 +50,7 @@ public class BookingsController extends CrudController<Booking, Integer> {
 				.toList();
 	}
 
-	public boolean isDateWithinRange(LocalDate bookingArrivalDate, LocalDate bookingDepartureDate, LocalDate startDate, LocalDate endDate) {
+	private boolean isDateWithinRange(LocalDate bookingArrivalDate, LocalDate bookingDepartureDate, LocalDate startDate, LocalDate endDate) {
         return (!bookingArrivalDate.isBefore(startDate) && !bookingArrivalDate.isAfter(endDate))
         		|| (!bookingDepartureDate.isBefore(startDate) && !bookingDepartureDate.isAfter(endDate))
         		|| (!bookingArrivalDate.isAfter(startDate) && !bookingDepartureDate.isBefore(endDate));

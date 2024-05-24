@@ -1,12 +1,10 @@
 package controlador;
 
-import java.util.List;
 import entities.UserType;
 import modelos.User;
 
 
 public class Register {
-   
 	
 	public void registerUser(
 				String idType, 
@@ -21,11 +19,7 @@ public class Register {
 				) 
 	{
 		UserController userController = new UserController();
-		List<User> userList = userController.readObjectsFromFile("usuarios.txt");
-		userList.add(new User(idType, id, names, lastNames, email, residenceAddress, residenceCity, phone, password, UserType.client));
-		userController.storeObjectsToFile("usuarios.txt", userList);
+		userController.addElement(new User(idType, id, names, lastNames, email, residenceAddress, residenceCity, phone, password, UserType.client));
 	}
-	
-	public Register() {
-	}
+
 }

@@ -9,7 +9,7 @@ import modelos.User;
 import modelos.Room;
 import modelos.states.BookingStates;
 
-public class BookingValidator implements IValidator<Booking, BookingStates> {
+public class BookingValidator extends IValidator<Booking, BookingStates> {
 	
 	private final int GUEST_AMOUNT = 0;
 	private final int ARRIVAL_DATE = 1;
@@ -20,28 +20,25 @@ public class BookingValidator implements IValidator<Booking, BookingStates> {
 	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 	private final RoomsController roomsController = new RoomsController();
 	
-	
 	@Override
 	public BookingStates validate(List<String> elements) {
 		String guestAmount = elements.get(GUEST_AMOUNT);
 		String arrivalDate = elements.get(ARRIVAL_DATE);
 		String departureDate = elements.get(DEPARTURE_DATE);
 		
-		//campos vacios
-		if(guestAmount.isEmpty() || arrivalDate.isEmpty() || departureDate.isEmpty()) {
+		if(super.areFieldsEmpty(guestAmount, arrivalDate, departureDate)) {
 			return BookingStates.emptyFields;
 		}
 		
-		//cantidad de huespedes no es numero o las fechas no tienen el formato
-		if(!isNumeric(guestAmount) || !isDate(arrivalDate) || !isDate(departureDate)) {
+		
+		if(invalidFormat(guestAmount, arrivalDate, departureDate)) {
 			return BookingStates.wrongFormat;
 		}
 		
 		LocalDate arrivalDateObj = LocalDate.parse((String) elements.get(ARRIVAL_DATE), formatter);
 		LocalDate departureDateObj = LocalDate.parse((String) elements.get(DEPARTURE_DATE), formatter); 
 		
-		//fecha de salida antes de la de llegada o la de llegada antes que el día presente
-		if(departureDateObj.isBefore(arrivalDateObj) || arrivalDateObj.isBefore(LocalDate.now())) {
+		if(invalidDates(arrivalDateObj, departureDateObj)) {
 			return BookingStates.invalidDate;
 		}
 		
@@ -49,13 +46,13 @@ public class BookingValidator implements IValidator<Booking, BookingStates> {
 			return BookingStates.notAvailable;
 		}
 		
-		if(Integer.parseInt(elements.get(GUEST_AMOUNT)) > roomsController.getElementById(Integer.parseInt( elements.get(ROOM))).get().getCapacity()) {
+		if(invalidGuestAmount(Integer.parseInt(elements.get(GUEST_AMOUNT)), roomsController.getElementById(Integer.parseInt( elements.get(ROOM))).get().getCapacity())){
 			return BookingStates.invalidGuestAmount;
 		}
 		
-		
 		return BookingStates.verified;
 	}
+	
 	
 	@Override
 	public Booking parseObject(List<Object> elements) {
@@ -72,5 +69,17 @@ public class BookingValidator implements IValidator<Booking, BookingStates> {
 	
 	private boolean isDate(String str) {
 		return str.matches("^\\d\\d\\d\\d\\/((0[13578]|1[02])\\/([0-2][0-9]|3[01])|(0[469]|11)\\/([0-2][0-9]|30)|02\\/([0-1][0-9]|2[0-8]))$");
+	}
+	
+	private boolean invalidFormat(String guestAmount, String arrivalDate, String departureDate) {
+		return !isNumeric(guestAmount) || !isDate(arrivalDate) || !isDate(departureDate);
+	}
+	
+	private boolean invalidDates(LocalDate arrivalDate, LocalDate departureDate) {
+		return departureDate.isBefore(arrivalDate) || arrivalDate.isBefore(LocalDate.now());
+	}
+	
+	private boolean invalidGuestAmount(int guestAmount, int capacity) {
+		return guestAmount > capacity;
 	}
 }

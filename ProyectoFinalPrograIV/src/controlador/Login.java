@@ -27,7 +27,4 @@ public class Login {
 		return LoginStates.verified;
 	}
 	
-	public Login() {
-
-	}
 }
