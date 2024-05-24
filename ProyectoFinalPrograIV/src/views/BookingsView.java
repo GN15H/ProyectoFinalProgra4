@@ -2,7 +2,7 @@ package views;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -18,6 +18,7 @@ import javax.swing.event.ListSelectionListener;
 import controlador.BookingsController;
 import modelos.Booking;
 import modelos.User;
+import views.userViews.BookingDetailsView;
 import views.widgets.BookingCellRenderer;
 
 public class BookingsView {
@@ -32,8 +33,8 @@ public class BookingsView {
         frame.setSize(600, 400);
 
         // Create a list of Room objects
-        List<Booking> bookingsList = bookingsController.getUserBookings(user);
-        //bookingsList.sort(Comparator.comparingDouble(Booking::getId));
+        List<Booking> bookingsList = new ArrayList<>( bookingsController.getUserBookings(user));
+        bookingsList.sort(Comparator.comparingInt(Booking::getId));
         
         if (bookingsList.isEmpty()) {
         	JOptionPane.showMessageDialog(frame, "No tiene reservas", "Error", JOptionPane.CLOSED_OPTION);
@@ -52,13 +53,13 @@ public class BookingsView {
         
         // Add ListSelectionListener to handle selection changes
         jList.addListSelectionListener(new ListSelectionListener() {
-            //@SuppressWarnings("unused")
+            @SuppressWarnings("unused")
 			@Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
                     Booking selectedBooking = jList.getSelectedValue();
                     if (selectedBooking != null) {
-                    	//RoomDetailsView roomDetailsView = new RoomDetailsView(selectedRoom, user);
+                    	BookingDetailsView bookingDetailsView = new BookingDetailsView(selectedBooking);
                         System.out.println("Selected Booking: " + selectedBooking.getId() + ", " +
                                            "huespedes: " + selectedBooking.getGuestAmount() + ", " +
                                            "Fecha llegada" + selectedBooking.getArrivalDate() + ", " +

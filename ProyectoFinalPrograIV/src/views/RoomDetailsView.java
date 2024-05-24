@@ -55,7 +55,7 @@ public class RoomDetailsView {
         	@SuppressWarnings("unused")
 			public void actionPerformed(ActionEvent e) {
     			f.dispose();
-    			BookView bookView = new BookView(room,user);
+    			BookView bookView = new BookView(room,user, Optional.empty());
         	}
         		
         });

@@ -2,8 +2,10 @@ package views.userViews;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -26,6 +28,7 @@ public class BookView {
 	
 	private Room room;
 	private User user;
+	private Optional<Booking> booking;
 	
 	private BookingsController bookingsController = new BookingsController();
 	private IValidator<Booking> bookingValidator = new BookingValidator();
@@ -36,9 +39,10 @@ public class BookView {
 	JTextField guestAmountField, arrivalDateField, departureDateField;
 	
 	
-	public BookView(Room room, User user) {	
+	public BookView(Room room, User user, Optional<Booking> booking) {	
 		this.room = room;
 		this.user = user;
+		this.booking = booking;
 		
 	    addLabels();
 	    addFields();
@@ -65,9 +69,16 @@ public class BookView {
 				JOptionPane.showMessageDialog(f, "Tiene campos con valores no válidos", "Error", JOptionPane.CLOSED_OPTION);
 				return;
 			case verified:
-				Booking booking = bookingValidator.parseObject(objElements);
-				bookingsController.addElement(booking);
-				JOptionPane.showMessageDialog(f, "Reserva creada correctamente", "Éxito", JOptionPane.CLOSED_OPTION);
+				Booking bookingObj = bookingValidator.parseObject(objElements);
+				if(booking.isEmpty()) {
+					bookingsController.addElement(bookingObj);
+					JOptionPane.showMessageDialog(f, "Reserva creada correctamente", "Éxito", JOptionPane.CLOSED_OPTION);
+					
+				}else {
+					bookingsController.updateElement(booking.get(),bookingObj);
+					JOptionPane.showMessageDialog(f, "Reserva actualizad correctamente", "Éxito", JOptionPane.CLOSED_OPTION);
+					
+				}
 				f.dispose();
 				return;
 			default:
@@ -113,7 +124,16 @@ public class BookView {
 		departureDateField = new JTextField();
 		departureDateField.setBounds(200, 240-(10*k), 200, 20);
 		f.add(departureDateField);
+		
+		if(booking.isPresent()) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
+			guestAmountField.setText(String.valueOf(booking.get().getGuestAmount()));
+			arrivalDateField.setText(String.valueOf(booking.get().getArrivalDate().format(formatter)));
+			departureDateField.setText(String.valueOf(booking.get().getDepartureDate().format(formatter)));
+
+		}
+		
 	}
 	
 	private void addLabels() {
