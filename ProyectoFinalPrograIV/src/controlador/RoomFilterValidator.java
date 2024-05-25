@@ -25,20 +25,15 @@ public class RoomFilterValidator extends Validator<RoomFilter, RoomFilterStates>
 		String arrivalDate = elements.get(ARRIVAL_DATE);
 		String departureDate = elements.get(DEPARTURE_DATE);
 		
-		if(super.areFieldsEmpty(roomType, capacity, price, arrivalDate, departureDate)) {
-			return RoomFilterStates.emptyFields;
-		}
+		if(super.areFieldsEmpty(roomType, capacity, price, arrivalDate, departureDate)) return RoomFilterStates.emptyFields;
 		
-		if(invalidFormat(capacity, price, arrivalDate, departureDate)) {
-			return RoomFilterStates.wrongFormat;
-		}
+		
+		if(invalidFormat(capacity, price, arrivalDate, departureDate)) return RoomFilterStates.wrongFormat;
 		
 		LocalDate arrivalDateObj = LocalDate.parse((String) elements.get(ARRIVAL_DATE), formatter);
 		LocalDate departureDateObj = LocalDate.parse((String) elements.get(DEPARTURE_DATE), formatter); 
 		
-		if(super.invalidDates(arrivalDateObj, departureDateObj)) {
-			return RoomFilterStates.invalidDate;
-		}
+		if(super.invalidDates(arrivalDateObj, departureDateObj)) return RoomFilterStates.invalidDate;
 		
 		return RoomFilterStates.verified;
 	}

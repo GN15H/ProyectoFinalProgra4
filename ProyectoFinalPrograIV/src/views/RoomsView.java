@@ -24,11 +24,8 @@ public class RoomsView {
 		JFrame frame = new JFrame("Rooms View");
         frame.setSize(600, 400);
 
-        // Create a list of Room objects
-        //List<Room> roomList = roomsController.getAll();
         roomList.sort(Comparator.comparingDouble(Room::getId));
         
-        // Create the JList with a DefaultListModel
         DefaultListModel<Room> listModel = new DefaultListModel<>();
         for (Room room : roomList) {
             listModel.addElement(room);
@@ -38,7 +35,6 @@ public class RoomsView {
         jList.setCellRenderer(new RoomCellRenderer());
         jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
-        // Add ListSelectionListener to handle selection changes
         jList.addListSelectionListener(new ListSelectionListener() {
             @SuppressWarnings("unused")
 			@Override
@@ -57,13 +53,10 @@ public class RoomsView {
             }
         });
         
-        // Wrap the JList in a JScrollPane
         JScrollPane scrollPane = new JScrollPane(jList);
 
-        // Set the preferred size of the scroll pane
         scrollPane.setPreferredSize(new Dimension(580, 350));
 
-        // Add the scroll pane to the frame
         frame.setLayout(new BorderLayout());
         frame.add(scrollPane, BorderLayout.CENTER);
 

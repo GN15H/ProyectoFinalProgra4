@@ -26,28 +26,20 @@ public class BookingValidator extends Validator<Booking, BookingStates> {
 		String arrivalDate = elements.get(ARRIVAL_DATE);
 		String departureDate = elements.get(DEPARTURE_DATE);
 		
-		if(super.areFieldsEmpty(guestAmount, arrivalDate, departureDate)) {
-			return BookingStates.emptyFields;
-		}
+		if(super.areFieldsEmpty(guestAmount, arrivalDate, departureDate)) return BookingStates.emptyFields;
 		
-		if(invalidFormat(guestAmount, arrivalDate, departureDate)) {
-			return BookingStates.wrongFormat;
-		}
+		if(invalidFormat(guestAmount, arrivalDate, departureDate)) return BookingStates.wrongFormat;
 		
 		LocalDate arrivalDateObj = LocalDate.parse((String) elements.get(ARRIVAL_DATE), formatter);
 		LocalDate departureDateObj = LocalDate.parse((String) elements.get(DEPARTURE_DATE), formatter); 
 		
-		if(super.invalidDates(arrivalDateObj, departureDateObj)) {
-			return BookingStates.invalidDate;
-		}
+		if(super.invalidDates(arrivalDateObj, departureDateObj)) return BookingStates.invalidDate;
 		
-		if(!roomsController.isRoomAvailable(roomsController.getElementById(Integer.parseInt( elements.get(ROOM))).get(), arrivalDateObj, departureDateObj)) {
+		if(!roomsController.isRoomAvailable(roomsController.getElementById(Integer.parseInt( elements.get(ROOM))).get(), arrivalDateObj, departureDateObj)) 
 			return BookingStates.notAvailable;
-		}
 		
-		if(invalidGuestAmount(Integer.parseInt(elements.get(GUEST_AMOUNT)), roomsController.getElementById(Integer.parseInt( elements.get(ROOM))).get().getCapacity())){
+		if(invalidGuestAmount(Integer.parseInt(elements.get(GUEST_AMOUNT)), roomsController.getElementById(Integer.parseInt( elements.get(ROOM))).get().getCapacity()))
 			return BookingStates.invalidGuestAmount;
-		}
 		
 		return BookingStates.verified;
 	}
@@ -67,7 +59,5 @@ public class BookingValidator extends Validator<Booking, BookingStates> {
 	}
 	
 	
-	private boolean invalidGuestAmount(int guestAmount, int capacity) {
-		return guestAmount > capacity;
-	}
+	private boolean invalidGuestAmount(int guestAmount, int capacity) { return guestAmount > capacity; }
 }

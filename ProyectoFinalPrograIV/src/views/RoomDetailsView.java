@@ -15,6 +15,7 @@ import modelos.Room;
 import modelos.RoomType;
 import modelos.User;
 import views.adminViews.CreateRoom;
+import views.adminViews.VerifyRoomView;
 import views.userViews.BookView;
 
 public class RoomDetailsView {
@@ -84,6 +85,14 @@ public class RoomDetailsView {
 		
 		verifyButton = new JButton("Disponibilidad");
 		verifyButton.setBounds(200,270,100,20);
+		verifyButton.addActionListener(new ActionListener() {
+        	@SuppressWarnings("unused")
+			public void actionPerformed(ActionEvent e) {
+    			f.dispose();
+    			VerifyRoomView verifyRoom = new VerifyRoomView(room);
+        	}
+        		
+        });
 		
 		if(user.getUserType() == UserType.admin) {
 			f.add(editButton);

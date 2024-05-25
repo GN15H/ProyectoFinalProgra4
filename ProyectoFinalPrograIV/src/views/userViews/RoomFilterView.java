@@ -24,7 +24,7 @@ import modelos.states.RoomFilterStates;
 import views.RoomsView;
 
 public class RoomFilterView {
-private final int k = 4;
+	private final int k = 4;
 	
 	private User user;
 
