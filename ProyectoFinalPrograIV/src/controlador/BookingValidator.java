@@ -9,7 +9,7 @@ import modelos.User;
 import modelos.Room;
 import modelos.states.BookingStates;
 
-public class BookingValidator extends IValidator<Booking, BookingStates> {
+public class BookingValidator extends Validator<Booking, BookingStates> {
 	
 	private final int GUEST_AMOUNT = 0;
 	private final int ARRIVAL_DATE = 1;
@@ -37,7 +37,7 @@ public class BookingValidator extends IValidator<Booking, BookingStates> {
 		LocalDate arrivalDateObj = LocalDate.parse((String) elements.get(ARRIVAL_DATE), formatter);
 		LocalDate departureDateObj = LocalDate.parse((String) elements.get(DEPARTURE_DATE), formatter); 
 		
-		if(invalidDates(arrivalDateObj, departureDateObj)) {
+		if(super.invalidDates(arrivalDateObj, departureDateObj)) {
 			return BookingStates.invalidDate;
 		}
 		
@@ -62,21 +62,10 @@ public class BookingValidator extends IValidator<Booking, BookingStates> {
 		
 	}
 	
-	private boolean isNumeric(String str) {
-        return str.matches("\\d+");
-    }
-	
-	private boolean isDate(String str) {
-		return str.matches("^\\d\\d\\d\\d\\/((0[13578]|1[02])\\/([0-2][0-9]|3[01])|(0[469]|11)\\/([0-2][0-9]|30)|02\\/([0-1][0-9]|2[0-8]))$");
-	}
-	
 	private boolean invalidFormat(String guestAmount, String arrivalDate, String departureDate) {
-		return !isNumeric(guestAmount) || !isDate(arrivalDate) || !isDate(departureDate);
+		return !super.isNumeric(guestAmount) || !super.isDate(arrivalDate) || !super.isDate(departureDate);
 	}
 	
-	private boolean invalidDates(LocalDate arrivalDate, LocalDate departureDate) {
-		return departureDate.isBefore(arrivalDate) || arrivalDate.isBefore(LocalDate.now());
-	}
 	
 	private boolean invalidGuestAmount(int guestAmount, int capacity) {
 		return guestAmount > capacity;

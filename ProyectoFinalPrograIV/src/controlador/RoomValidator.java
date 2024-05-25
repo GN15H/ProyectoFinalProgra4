@@ -7,7 +7,7 @@ import modelos.Room;
 import modelos.RoomType;
 import modelos.states.RoomCreationStates;
 
-public class RoomValidator extends IValidator<Room, RoomCreationStates>{
+public class RoomValidator extends Validator<Room, RoomCreationStates>{
 	private final int ROOM_TYPE = 0;
 	private final int CAPACITY = 1;
 	private final int PRICE = 2;
@@ -39,16 +39,9 @@ public class RoomValidator extends IValidator<Room, RoomCreationStates>{
 		return new Room(capacityNum, priceNum, (String) elements.get(COMFORT), roomTypeEnum);
 	}
 	
-	private boolean isNumeric(String str) {
-        return str.matches("\\d+");
-    }
-	
-	private boolean isDecimal(String str) {
-		return str.matches("^\\d+(\\.\\d+)?$");
-	}
 
 	private boolean invalidFormat(String capacity, String price) {
-		return !isNumeric(capacity) || !isDecimal(price);
+		return !super.isNumeric(capacity) || !super.isDecimal(price);
 	}
 	
 }

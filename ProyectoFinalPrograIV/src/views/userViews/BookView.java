@@ -20,7 +20,7 @@ import modelos.Booking;
 import modelos.Room;
 import modelos.User;
 import modelos.states.BookingStates;
-import controlador.IValidator;
+import controlador.Validator;
 
 public class BookView {
 
@@ -57,7 +57,7 @@ public class BookView {
 	private void createRoomHandler() {
 		List<String> elements = Arrays.asList(guestAmountField.getText(), arrivalDateField.getText(), departureDateField.getText(), String.valueOf(user.getId()),String.valueOf(room.getId()));
 		List<Object> objElements = Arrays.asList(guestAmountField.getText(), arrivalDateField.getText(), departureDateField.getText(), user, room);
-		IValidator<Booking, BookingStates> bookingValidator = new BookingValidator();
+		Validator<Booking, BookingStates> bookingValidator = new BookingValidator();
 
 		BookingStates state = bookingValidator.validate(elements);
 		

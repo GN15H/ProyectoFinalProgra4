@@ -12,14 +12,14 @@ import controlador.RoomsController;
 import modelos.Room;
 import modelos.RoomType;
 import modelos.states.RoomCreationStates;
-import controlador.IValidator;
+import controlador.Validator;
 
 public class CreateRoom {
 	private final int k = 4;
 	
 	private Optional<Room> roomToUpdate;
 	
-	private IValidator<Room, RoomCreationStates> roomValidator = new RoomValidator();
+	private Validator<Room, RoomCreationStates> roomValidator = new RoomValidator();
 	private RoomsController roomsController = new RoomsController();
 	
 	final String[] roomTypes = {RoomType.simple.getValue(),RoomType.multiple.getValue()}; //list of id types

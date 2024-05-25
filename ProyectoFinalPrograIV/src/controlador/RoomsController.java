@@ -10,6 +10,7 @@ import main.ProyectoFinal;
 import modelos.Booking;
 import modelos.Constants;
 import modelos.Room;
+import modelos.RoomFilter;
 import modelos.RoomType;
 
 public class RoomsController extends CrudController<Room, Integer>{
@@ -61,7 +62,7 @@ public class RoomsController extends CrudController<Room, Integer>{
 
     private List<Room> getRoomsByPrice(double price, List<Room> list) {
         return list.stream()
-                .filter(e -> e.getPrice() >= price)
+                .filter(e -> e.getPrice() <= price)
                 .collect(Collectors.toList());
     }
 
@@ -74,14 +75,14 @@ public class RoomsController extends CrudController<Room, Integer>{
 		return freeRooms;
 	}
 	
-	public List<Room> getFilteredRooms(Room room){
-		List<Room> filteredRooms = roomsList;
+	public List<Room> getFilteredRooms(RoomFilter roomFilter){
+		List<Room> filteredRooms = getAvailableRoomsByDate(roomFilter.getArrivalDate(),roomFilter.getDepartureDate());
 		ProyectoFinal.printArray(filteredRooms);
-		filteredRooms = getRoomsByRoomType(room.getRoomType(), filteredRooms);
+		filteredRooms = getRoomsByRoomType(roomFilter.getRoomType(), filteredRooms);
 		ProyectoFinal.printArray(filteredRooms);
-		filteredRooms = getRoomsByCapacity(room.getCapacity(), filteredRooms);
+		filteredRooms = getRoomsByCapacity(roomFilter.getCapacity(), filteredRooms);
 		ProyectoFinal.printArray(filteredRooms);
-		filteredRooms = getRoomsByPrice(room.getPrice(), filteredRooms);
+		filteredRooms = getRoomsByPrice(roomFilter.getPrice(), filteredRooms);
 		return filteredRooms;
 	}
 	

@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -13,14 +12,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import controlador.IValidator;
-import controlador.RoomValidator;
 import controlador.RoomsController;
-import main.ProyectoFinal;
+import controlador.Validator;
+import controlador.RoomFilterValidator;
+
 import modelos.Room;
+import modelos.RoomFilter;
 import modelos.RoomType;
 import modelos.User;
-import modelos.states.RoomCreationStates;
+import modelos.states.RoomFilterStates;
 import views.RoomsView;
 
 public class RoomFilterView {
@@ -28,15 +28,13 @@ private final int k = 4;
 	
 	private User user;
 
-	private IValidator<Room, RoomCreationStates> roomValidator = new RoomValidator();
 	private RoomsController roomsController = new RoomsController();
 	
 	final String[] roomTypes = {RoomType.simple.getValue(),RoomType.multiple.getValue()}; //list of id types
 	
 	JFrame f = new JFrame("RoomFilter"); 
 	JComboBox<String> roomTypeField;
-	JTextField capacity, price, comfort;
-	
+	JTextField capacity, price, arrivalDate, departureDate;
 	
 	public RoomFilterView(User user) {	
 		this.user = user;
@@ -52,11 +50,14 @@ private final int k = 4;
 	    f.setVisible(true);
     } 
 		
+	@SuppressWarnings("unused")
 	private void createRoomHandler() {
-		List<String> elements = Arrays.asList(roomTypeField.getItemAt(roomTypeField.getSelectedIndex()),capacity.getText(),price.getText(),comfort.getText());
-		List<Object> objElements = Arrays.asList(roomTypeField.getItemAt(roomTypeField.getSelectedIndex()),capacity.getText(),price.getText(),comfort.getText());
+		List<String> elements = Arrays.asList(roomTypeField.getItemAt(roomTypeField.getSelectedIndex()),capacity.getText(),price.getText(),arrivalDate.getText(), departureDate.getText());
+		List<Object> objElements = Arrays.asList(roomTypeField.getItemAt(roomTypeField.getSelectedIndex()),capacity.getText(),price.getText(),arrivalDate.getText(), departureDate.getText());
+		Validator<RoomFilter, RoomFilterStates> roomFilterValidator = new RoomFilterValidator();
 		
-		RoomCreationStates state = roomValidator.validate(elements);
+		RoomFilterStates state = roomFilterValidator.validate(elements);
+		
 		switch(state) {
 			case emptyFields:
 				JOptionPane.showMessageDialog(f, "Tiene campos vacios", "Error", JOptionPane.CLOSED_OPTION);
@@ -64,11 +65,12 @@ private final int k = 4;
 			case wrongFormat:
 				JOptionPane.showMessageDialog(f, "Tiene campos con valores no válidos", "Error", JOptionPane.CLOSED_OPTION);
 				return;
+			case invalidDate:
+				JOptionPane.showMessageDialog(f, "Tiene fechas no válidas", "Error", JOptionPane.CLOSED_OPTION);
+				return;
 			case verified:
-				Room room = roomValidator.parseObject(objElements);
-				List<Room> filteredRooms = roomsController.getFilteredRooms(room);
-				System.out.println("AVER PUES OMEBUTIFARRA");
-				ProyectoFinal.printArray(filteredRooms);
+				RoomFilter roomFilter = roomFilterValidator.parseObject(objElements); 
+				List<Room> filteredRooms = roomsController.getFilteredRooms(roomFilter);
 				RoomsView roomsView = new RoomsView(user, filteredRooms);
 				f.dispose();
 				return;
@@ -87,17 +89,16 @@ private final int k = 4;
         	public void actionPerformed(ActionEvent e) {
     			createRoomHandler();
         	}
-        		
         });
 		
 		loginButton = new JButton("Sin filtro");
 		loginButton.setBounds(210,430-(10*k),180, 20);
 		loginButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
+        	@SuppressWarnings("unused")
+			public void actionPerformed(ActionEvent e) {
         		RoomsView roomsView = new RoomsView(user, roomsController.getAll());
         		f.dispose();
-        	}
-        		
+        	}	
         });
 		
 		f.add(registerButton);
@@ -108,34 +109,28 @@ private final int k = 4;
 		roomTypeField = new JComboBox<String>(roomTypes);  
 		roomTypeField.setBounds(200, 90-(10*k), 200, 20);
 		
-
 		capacity = new JTextField();
 		capacity.setBounds(200, 140-(10*k), 200, 20);
-		capacity.setText(null);
 
 		price = new JTextField();
 		price.setBounds(200, 190-(10*k), 200, 20);
 
-		comfort = new JTextField();
-		comfort.setBounds(200, 240-(10*k), 200, 20);
+		arrivalDate = new JTextField();
+		arrivalDate.setBounds(200, 240-(10*k), 200, 20);
 		
-		/*if(roomToUpdate.isPresent()) {
-			roomTypeField.setSelectedItem(roomToUpdate.get().getRoomType().getValue());
-			capacity.setText(String.valueOf(roomToUpdate.get().getCapacity()));
-			price.setText(String.valueOf(roomToUpdate.get().getPrice()));
-			comfort.setText(roomToUpdate.get().getComfort());
-		}*/
-		
+		departureDate = new JTextField();
+		departureDate.setBounds(200, 290-(10*k), 200, 20);
 		
 		f.add(roomTypeField);
 		f.add(capacity);
-		f.add(comfort);
+		f.add(arrivalDate);
+		f.add(departureDate);
 		f.add(price);
 
 	}
 	
 	private void addLabels() {
-		JLabel roomTypeLabel, capacityLabel, priceLabel, comfortLabel;
+		JLabel roomTypeLabel, capacityLabel, priceLabel, arrivalDateLabel, departureDateLabel;
 		
 		roomTypeLabel = new JLabel("Tipo de habitación");
 		roomTypeLabel.setBounds(200, 70-(10*k), 150, 20);
@@ -146,12 +141,15 @@ private final int k = 4;
 		priceLabel = new JLabel("Precio");
 		priceLabel.setBounds(200, 170-(10*k), 150, 20);
 		
-		comfortLabel = new JLabel("Comodidades");
-		comfortLabel.setBounds(200, 220-(10*k), 150, 20);
+		arrivalDateLabel = new JLabel("Fecha de llegada");
+		arrivalDateLabel.setBounds(200, 220-(10*k), 150, 20);
+		
+		departureDateLabel = new JLabel("Fecha de salida");
+		departureDateLabel.setBounds(200, 270-(10*k), 150, 20);
 
 		f.add(roomTypeLabel);
 	    f.add(capacityLabel);
 	    f.add(priceLabel);
-	    f.add(comfortLabel);
+	    f.add(departureDateLabel);
 	}
 }

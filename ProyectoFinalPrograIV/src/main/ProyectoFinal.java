@@ -2,10 +2,8 @@ package main;
 
 import java.util.List;
 
-import controlador.UserController;
 import views.LoginView;
-import modelos.User;
-import modelos.UserType;
+
 
 public class ProyectoFinal {
 	
