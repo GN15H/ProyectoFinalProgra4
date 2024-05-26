@@ -1,15 +1,16 @@
 package views;
 import java.awt.event.*;
+import java.util.Arrays;
 
 import javax.swing.*;
 import modelos.states.LoginStates;
-import controlador.Login;
+import controlador.LoginValidator;
 import controlador.UserController;
 
 public class LoginView  
 {  
 	private UserController userController = new UserController();
-	private Login login = new Login();
+	private LoginValidator login = new LoginValidator();
 	private JFrame f;
 	private JLabel usernameLabel, passwordLabel, loginLabel;
 	private JTextField usernameTextField;
@@ -70,7 +71,7 @@ public class LoginView
 	}
 	
 	private void loginHandler() {
-		LoginStates loginState = login.verifyUser(usernameTextField.getText(), new String(passwordTextField.getPassword()));
+		LoginStates loginState = login.validate(Arrays.asList( usernameTextField.getText(), new String(passwordTextField.getPassword())));
 		
 		switch (loginState) {
 			case emptyFields:

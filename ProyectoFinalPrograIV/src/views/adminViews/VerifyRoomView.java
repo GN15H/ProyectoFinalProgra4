@@ -107,10 +107,10 @@ private final int k = 4;
 	private void addLabels() {
 		JLabel arrivalDateLabel, departureDateLabel;
 		
-		arrivalDateLabel = new JLabel("Tipo de habitación");
+		arrivalDateLabel = new JLabel("Fecha de llegada");
 		arrivalDateLabel.setBounds(200, 70-(10*k), 150, 20);
 		
-		departureDateLabel = new JLabel("Capacidad");
+		departureDateLabel = new JLabel("Fecha de salida");
 		departureDateLabel.setBounds(200, 120-(10*k), 150, 20);
 		
 		f.add(arrivalDateLabel);
