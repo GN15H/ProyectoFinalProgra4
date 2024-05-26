@@ -20,7 +20,6 @@ import modelos.Booking;
 import modelos.Room;
 import modelos.User;
 import modelos.states.BookingStates;
-import controlador.Validator;
 
 public class BookView {
 
@@ -57,9 +56,15 @@ public class BookView {
 	private void createRoomHandler() {
 		List<String> elements = Arrays.asList(guestAmountField.getText(), arrivalDateField.getText(), departureDateField.getText(), String.valueOf(user.getId()),String.valueOf(room.getId()));
 		List<Object> objElements = Arrays.asList(guestAmountField.getText(), arrivalDateField.getText(), departureDateField.getText(), user, room);
-		Validator<Booking, BookingStates> bookingValidator = new BookingValidator();
+		BookingValidator bookingValidator = new BookingValidator();
 
-		BookingStates state = bookingValidator.validate(elements);
+		BookingStates state;
+		
+		if(booking.isEmpty()) {
+			state = bookingValidator.validate(elements);
+		}else {
+			state = bookingValidator.validateEdit(elements, user);
+		}
 		
 		switch(state) {
 			case emptyFields:
@@ -85,7 +90,7 @@ public class BookView {
 					
 				}else {
 					bookingsController.updateElement(booking.get(),bookingObj);
-					JOptionPane.showMessageDialog(f, "Reserva actualizad correctamente", "Éxito", JOptionPane.CLOSED_OPTION);
+					JOptionPane.showMessageDialog(f, "Reserva actualizada correctamente", "Éxito", JOptionPane.CLOSED_OPTION);
 					
 				}
 				f.dispose();

@@ -12,9 +12,7 @@ import controlador.RoomsController;
 import modelos.UserType;
 import modelos.User;
 import views.adminViews.CreateRoom;
-import views.adminViews.UsersView;
 import views.userViews.BookView;
-import views.userViews.BookingsHistory;
 import views.userViews.RoomFilterView;
 
 public class HomeView {
@@ -54,16 +52,16 @@ public class HomeView {
 	
 	void addAdminFunctionalities() {
 		JMenu rooms = new JMenu("Habitaciones");
-		JMenu users = new JMenu("Usuarios");
+		JMenu exit = new JMenu("Salir");
 		JMenuItem seeRooms = new JMenuItem("Buscar habitación");
 		JMenuItem createRoom = new JMenuItem("Crear habitación");
-		JMenuItem seeUsers = new JMenuItem("Ver usuarios");
+		JMenuItem logOut = new JMenuItem("Cerrar Sesión");
 		
 		rooms.add(seeRooms); rooms.add(createRoom);
-		users.add(seeUsers);
+		exit.add(logOut);
 		
 		mainMenuBar.add(rooms);
-		mainMenuBar.add(users);
+		mainMenuBar.add(exit);
 		
 		seeRooms.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -78,9 +76,10 @@ public class HomeView {
             }
         });
         
-        seeUsers.addActionListener(new ActionListener() {
+        logOut.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                goToView(UsersView.class);
+            	homeView.dispose();
+                goToView(LoginView.class);
             }
         });
         
@@ -89,15 +88,20 @@ public class HomeView {
 	void addUserFunctionalities() {
 		JMenu rooms = new JMenu("Habitaciones"); 
 		JMenu bookings =new JMenu("Reservas");  
+		JMenu exit = new JMenu("Salir");
+
 		JMenuItem searchRooms = new JMenuItem("Buscar habitaciones"); 
 		JMenuItem book = new JMenuItem("Realizar reserva");  
 		JMenuItem seeBooks = new JMenuItem("Ver reservas");  
-		JMenuItem booksHistory =new JMenuItem("Historial de reservas");  
-        
-        /*bookings.add(book);*/ bookings.add(seeBooks); bookings.add(booksHistory);  
-        rooms.add(searchRooms);  
+		JMenuItem logOut = new JMenuItem("Cerrar Sesión");
+
+		
+        bookings.add(seeBooks);
+        rooms.add(searchRooms); 
+        exit.add(logOut);
         mainMenuBar.add(bookings);
         mainMenuBar.add(rooms);
+        mainMenuBar.add(exit);
         
         book.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -105,24 +109,22 @@ public class HomeView {
             }
         });
         
-        //action listener for seeBooks button
         seeBooks.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 goToView(BookingsView.class);
             }
         });
         
-        //action listener for booksHistory button
-        booksHistory.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                goToView(BookingsHistory.class);
-            }
-        });
-        
-        //action listener for seeRooms button
         searchRooms.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 goToView(RoomFilterView.class);
+            }
+        });
+        
+        logOut.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	homeView.dispose();
+                goToView(LoginView.class);
             }
         });
 		

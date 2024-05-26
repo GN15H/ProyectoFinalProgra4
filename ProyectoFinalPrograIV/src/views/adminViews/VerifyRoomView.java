@@ -23,7 +23,7 @@ private final int k = 4;
 	
 	private Room room;
 
-	private RoomsController roomsController = new RoomsController();
+	
 	
 	JFrame f = new JFrame("VerifyRoom"); 
 	JTextField arrivalDateField, departureDateField;
@@ -43,6 +43,7 @@ private final int k = 4;
     } 
 		
 	private void createRoomHandler() {
+		RoomsController roomsController = new RoomsController();
 		List<String> elements = Arrays.asList(arrivalDateField.getText(), departureDateField.getText());
 		List<Object> objElements = Arrays.asList(arrivalDateField.getText(), departureDateField.getText());
 		Validator<VerifyRoom, VerifyRoomStates> verifyRoomValidator = new VerifyRoomValidator();

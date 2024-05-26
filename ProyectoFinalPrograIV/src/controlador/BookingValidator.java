@@ -44,6 +44,29 @@ public class BookingValidator extends Validator<Booking, BookingStates> {
 		return BookingStates.verified;
 	}
 	
+	public BookingStates validateEdit(List<String> elements, User user) {
+		String guestAmount = elements.get(GUEST_AMOUNT);
+		String arrivalDate = elements.get(ARRIVAL_DATE);
+		String departureDate = elements.get(DEPARTURE_DATE);
+		
+		if(super.areFieldsEmpty(guestAmount, arrivalDate, departureDate)) return BookingStates.emptyFields;
+		
+		if(invalidFormat(guestAmount, arrivalDate, departureDate)) return BookingStates.wrongFormat;
+		
+		LocalDate arrivalDateObj = LocalDate.parse((String) elements.get(ARRIVAL_DATE), formatter);
+		LocalDate departureDateObj = LocalDate.parse((String) elements.get(DEPARTURE_DATE), formatter); 
+		
+		if(super.invalidDates(arrivalDateObj, departureDateObj)) return BookingStates.invalidDate;
+		
+		if(!roomsController.isRoomAvailable(roomsController.getElementById(Integer.parseInt( elements.get(ROOM))).get(), arrivalDateObj, departureDateObj, user)) 
+			return BookingStates.notAvailable;
+		
+		if(invalidGuestAmount(Integer.parseInt(elements.get(GUEST_AMOUNT)), roomsController.getElementById(Integer.parseInt( elements.get(ROOM))).get().getCapacity()))
+			return BookingStates.invalidGuestAmount;
+		
+		return BookingStates.verified;
+	}
+	
 	
 	@Override
 	public Booking parseObject(List<Object> elements) {

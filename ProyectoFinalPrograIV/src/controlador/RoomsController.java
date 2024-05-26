@@ -12,6 +12,7 @@ import modelos.Constants;
 import modelos.Room;
 import modelos.RoomFilter;
 import modelos.RoomType;
+import modelos.User;
 
 public class RoomsController extends CrudController<Room, Integer>{
 
@@ -75,6 +76,17 @@ public class RoomsController extends CrudController<Room, Integer>{
 		return freeRooms;
 	}
 	
+	private List<Room> getAvailableRoomsByDate(LocalDate arrivalDate, LocalDate departureDate, User user){
+		BookingsController bookingsController = new BookingsController();
+		List<Booking> bookings = bookingsController.getBookingsByDate(arrivalDate, departureDate);
+		List<Booking> userBookings = bookingsController.getUserBookings(user);
+		bookings.removeAll(userBookings);
+		List<Room> bookedRoomsByDate = bookings.stream().map(Booking::getRoom).collect(Collectors.toCollection(ArrayList::new));
+		List<Room> freeRooms =  roomsList;
+		freeRooms.removeAll(bookedRoomsByDate);
+		return freeRooms;
+	}
+	
 	public List<Room> getFilteredRooms(RoomFilter roomFilter){
 		List<Room> filteredRooms = getAvailableRoomsByDate(roomFilter.getArrivalDate(),roomFilter.getDepartureDate());
 		ProyectoFinal.printArray(filteredRooms);
@@ -88,6 +100,13 @@ public class RoomsController extends CrudController<Room, Integer>{
 	
 	public boolean isRoomAvailable(Room room, LocalDate arrivalDate, LocalDate departureDate) {
 		List<Room> freeRooms = getAvailableRoomsByDate(arrivalDate, departureDate);
+		return !freeRooms.stream()
+				.filter(e -> e.getId() == room.getId())
+				.toList().isEmpty();
+	}
+	
+	public boolean isRoomAvailable(Room room, LocalDate arrivalDate, LocalDate departureDate, User user) {
+		List<Room> freeRooms = getAvailableRoomsByDate(arrivalDate, departureDate, user);
 		return !freeRooms.stream()
 				.filter(e -> e.getId() == room.getId())
 				.toList().isEmpty();
