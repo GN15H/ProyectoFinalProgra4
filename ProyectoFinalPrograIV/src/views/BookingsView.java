@@ -23,11 +23,9 @@ import views.widgets.BookingCellRenderer;
 
 public class BookingsView {
 	
-	User user;
-	BookingsController bookingsController = new BookingsController();
+	private BookingsController bookingsController = new BookingsController();
 	
 	public BookingsView(User user) {
-		this.user = user;
 		
 		JFrame frame = new JFrame("Bookings View");
         frame.setSize(600, 400);

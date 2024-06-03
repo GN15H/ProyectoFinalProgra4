@@ -16,18 +16,20 @@ import views.userViews.BookView;
 import views.userViews.RoomFilterView;
 
 public class HomeView {
-	private User user;
-	//JMenu bookings, rooms, users;  
-    //JMenuItem book, seeBooks, booksHistory, seeUsers, searchRooms;  
-    JFrame homeView;
-    JMenuBar mainMenuBar;
+	private User user;  
+    private JFrame homeView;
+    private JMenuBar mainMenuBar;
 	
 	public HomeView(User user) {
 		this.user = user;
 		homeView = new JFrame();
+		JLabel welcomeLabel = new JLabel("Bienvenido");
+		welcomeLabel.setBounds(350, 330, 100, 100);
+		homeView.add(welcomeLabel);
 		
 		addMenuBarItems();
 		  
+		
 		homeView.setTitle("Home "+ user.getNames()+" "+ user.getLastNames()+" "+ user.getUserType().getValue());
 		homeView.setResizable(false);
 		homeView.setSize(800,800);

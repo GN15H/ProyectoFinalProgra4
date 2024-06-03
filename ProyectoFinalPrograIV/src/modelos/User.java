@@ -57,47 +57,6 @@ public class User implements Serializable {
     	return userType;
     }
 
-    // Setters
-    public void setIdType(String idType) {
-        this.idType = idType;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setNames(String names) {
-        this.names = names;
-    }
-
-    public void setLastNames(String lastNames) {
-        this.lastNames = lastNames;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setResidenceAddress(String residenceAddress) {
-        this.residenceAddress = residenceAddress;
-    }
-
-    public void setResidenceCity(String residenceCity) {
-        this.residenceCity = residenceCity;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
-    public void setUserType(UserType userType) {
-    	this.userType = userType;
-    }
-    
     public User(String idType, String id, String names, String lastNames, String email, String residenceAddress, String residenceCity, String phone, String password, UserType userType) {
         this.idType = idType;
         this.id = id;

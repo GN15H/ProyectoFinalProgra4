@@ -45,7 +45,7 @@ public abstract class CrudController<T, V> {
 		storeObjectsToFile(fileName, itemsList);
 	}
 	
-	public void storeObjectsToFile(String fileName, List<T> list) {
+	private void storeObjectsToFile(String fileName, List<T> list) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
             oos.writeObject(list);
             System.out.println("escribiendo en el archivo");
@@ -61,7 +61,7 @@ public abstract class CrudController<T, V> {
     }
 	
 	@SuppressWarnings("unchecked")
-	public List<T> readObjectsFromFile(String fileName) {
+	private List<T> readObjectsFromFile(String fileName) {
 	    List<T> list = new ArrayList<>();
 	    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
 	        list = (List<T>) ois.readObject();

@@ -3,14 +3,17 @@ import java.awt.event.*;
 import java.util.Arrays;
 
 import javax.swing.*;
+
+import modelos.User;
 import modelos.states.LoginStates;
 import controlador.LoginValidator;
 import controlador.UserController;
+import controlador.Validator;
 
 public class LoginView  
 {  
 	private UserController userController = new UserController();
-	private LoginValidator login = new LoginValidator();
+	private Validator<User, LoginStates> login = new LoginValidator();
 	private JFrame f;
 	private JLabel usernameLabel, passwordLabel, loginLabel;
 	private JTextField usernameTextField;
