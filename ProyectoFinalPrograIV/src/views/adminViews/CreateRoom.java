@@ -28,7 +28,6 @@ public class CreateRoom {
 	JComboBox<String> roomTypeField;
 	JTextField capacity, price, comfort;
 	
-	
 	public CreateRoom(Optional<Room> roomToUpdate) {	
 		this.roomToUpdate = roomToUpdate;
 		
@@ -70,7 +69,6 @@ public class CreateRoom {
 				break;
 		}
 	}
-	
 	
 	private void addButtons() {
 		JButton registerButton, loginButton;

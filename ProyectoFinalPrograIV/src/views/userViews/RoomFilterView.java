@@ -51,7 +51,7 @@ public class RoomFilterView {
     } 
 		
 	@SuppressWarnings("unused")
-	private void createRoomHandler() {
+	private void filterRoomHandler() {
 		List<String> elements = Arrays.asList(roomTypeField.getItemAt(roomTypeField.getSelectedIndex()),capacity.getText(),price.getText(),arrivalDate.getText(), departureDate.getText());
 		List<Object> objElements = Arrays.asList(roomTypeField.getItemAt(roomTypeField.getSelectedIndex()),capacity.getText(),price.getText(),arrivalDate.getText(), departureDate.getText());
 		Validator<RoomFilter, RoomFilterStates> roomFilterValidator = new RoomFilterValidator();
@@ -79,7 +79,6 @@ public class RoomFilterView {
 		}
 	}
 	
-	
 	private void addButtons() {
 		JButton registerButton, loginButton;
 		
@@ -87,7 +86,7 @@ public class RoomFilterView {
 		registerButton.setBounds(210,380-(10*k),180, 20);
 		registerButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-    			createRoomHandler();
+    			filterRoomHandler();
         	}
         });
 		

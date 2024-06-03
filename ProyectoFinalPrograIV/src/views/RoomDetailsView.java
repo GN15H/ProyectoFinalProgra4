@@ -22,24 +22,22 @@ public class RoomDetailsView {
 	private Room room;
 	private User user;
 	private JFrame f;
-	private JLabel idRoomLabel, capacityLabel, priceLabel, comfortLabel, roomTypeLabel;
-	private JButton bookButton, editButton, deleteButton, verifyButton;
 	private RoomsController roomsController = new RoomsController();
 	
 	private void addLabels() {
-		idRoomLabel = new JLabel("Habitación " + room.getId());
+		JLabel idRoomLabel = new JLabel("Habitación " + room.getId());
 		idRoomLabel.setBounds(180,20,80,20);
 		
-		capacityLabel = new JLabel("Capacidad: " + room.getCapacity());
+		JLabel capacityLabel = new JLabel("Capacidad: " + room.getCapacity());
 		capacityLabel.setBounds(180,60,80,20);
 		
-		priceLabel = new JLabel("Precio por noche: " + room.getPrice());
+		JLabel priceLabel = new JLabel("Precio por noche: " + room.getPrice());
 		priceLabel.setBounds(180,80,180,20);
 		
-		comfortLabel = new JLabel("Comodidades \n" + room.getComfort());
+		JLabel comfortLabel = new JLabel("Comodidades \n" + room.getComfort());
 		comfortLabel.setBounds(180,100,180,80);
 		
-		roomTypeLabel = new JLabel("Tipo de habitación: " + (room.getRoomType() == RoomType.simple ? "Simple" : "Compuesta"));
+		JLabel roomTypeLabel = new JLabel("Tipo de habitación: " + (room.getRoomType() == RoomType.simple ? "Simple" : "Compuesta"));
 		roomTypeLabel.setBounds(180,180,180,20);
 		
 		f.add(idRoomLabel);
@@ -50,7 +48,7 @@ public class RoomDetailsView {
 	}
 	
 	private void addButtons() {
-		bookButton = new JButton("Reservar");
+		JButton bookButton = new JButton("Reservar");
 		bookButton.setBounds(200,200,100,20);
 		bookButton.addActionListener(new ActionListener() {
         	@SuppressWarnings("unused")
@@ -61,7 +59,7 @@ public class RoomDetailsView {
         		
         });
 		
-		editButton = new JButton("Editar");
+		JButton editButton = new JButton("Editar");
 		editButton.setBounds(200,200,100,20);
 		editButton.addActionListener(new ActionListener() {
         	@SuppressWarnings("unused")
@@ -72,7 +70,7 @@ public class RoomDetailsView {
         		
         });
 		
-		deleteButton = new JButton("Borrar");
+		JButton deleteButton = new JButton("Borrar");
 		deleteButton.setBounds(200,230,100,20);
 		deleteButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -83,7 +81,7 @@ public class RoomDetailsView {
         		
         });
 		
-		verifyButton = new JButton("Disponibilidad");
+		JButton verifyButton = new JButton("Disponibilidad");
 		verifyButton.setBounds(200,270,100,20);
 		verifyButton.addActionListener(new ActionListener() {
         	@SuppressWarnings("unused")

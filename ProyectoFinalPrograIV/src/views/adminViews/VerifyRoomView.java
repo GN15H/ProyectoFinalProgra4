@@ -19,12 +19,10 @@ import modelos.VerifyRoom;
 import modelos.states.VerifyRoomStates;
 
 public class VerifyRoomView {
-private final int k = 4;
+	private final int k = 4;
 	
 	private Room room;
 
-	
-	
 	JFrame f = new JFrame("VerifyRoom"); 
 	JTextField arrivalDateField, departureDateField;
 	
@@ -69,7 +67,6 @@ private final int k = 4;
 				break;
 		}
 	}
-	
 	
 	private void addButtons() {
 		JButton verifyButton, exitButton;

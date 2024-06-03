@@ -46,9 +46,7 @@ public class LoginView
         f.add(usernameTextField);
         f.add(passwordTextField);
 	}
-	
-	
-	
+		
 	private void addButtons() {
 		 loginButton = new JButton("Ingresar");
 	        loginButton.setBounds(250,350,100,20);
@@ -96,7 +94,7 @@ public class LoginView
 		}
 	}
 	
-     public LoginView(){  
+    public LoginView(){  
     	
         f = new JFrame();  
         

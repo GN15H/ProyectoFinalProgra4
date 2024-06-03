@@ -52,7 +52,7 @@ public class HomeView {
 		homeView.setJMenuBar(mainMenuBar); 
 	}
 	
-	void addAdminFunctionalities() {
+	private void addAdminFunctionalities() {
 		JMenu rooms = new JMenu("Habitaciones");
 		JMenu exit = new JMenu("Salir");
 		JMenuItem seeRooms = new JMenuItem("Buscar habitación");
@@ -87,7 +87,7 @@ public class HomeView {
         
 	}
 		
-	void addUserFunctionalities() {
+	private void addUserFunctionalities() {
 		JMenu rooms = new JMenu("Habitaciones"); 
 		JMenu bookings =new JMenu("Reservas");  
 		JMenu exit = new JMenu("Salir");

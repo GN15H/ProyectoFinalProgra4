@@ -16,27 +16,25 @@ import modelos.Booking;
 public class BookingDetailsView {
 	private Booking booking;
 	private JFrame f;
-	private JLabel idBookingLabel, guestAmountLabel, arrivalDateLabel, departureDateLabel, userLabel, roomLabel;
-	private JButton editButton, deleteButton;
 	private BookingsController bookingsController = new BookingsController();
 	
 	private void addLabels() {
-		idBookingLabel = new JLabel("Reserva: " + booking.getId() + " " + (booking.getArrivalDate().isBefore(LocalDate.now()) ? "Vencida" : "Activa"));
+		JLabel idBookingLabel = new JLabel("Reserva: " + booking.getId() + " " + (booking.getArrivalDate().isBefore(LocalDate.now()) ? "Vencida" : "Activa"));
 		idBookingLabel.setBounds(180,20,120,20);
 		
-		guestAmountLabel = new JLabel("Huespedes : " + booking.getGuestAmount());
+		JLabel guestAmountLabel = new JLabel("Huespedes : " + booking.getGuestAmount());
 		guestAmountLabel.setBounds(180,60,80,20);
 		
-		arrivalDateLabel = new JLabel("Fecha de llegada: " + booking.getArrivalDate());
+		JLabel arrivalDateLabel = new JLabel("Fecha de llegada: " + booking.getArrivalDate());
 		arrivalDateLabel.setBounds(180,80,180,20);
 		
-		departureDateLabel = new JLabel("Fecha de salida: " + booking.getDepartureDate());
+		JLabel departureDateLabel = new JLabel("Fecha de salida: " + booking.getDepartureDate());
 		departureDateLabel.setBounds(180,100,180,80);
 		
-		userLabel = new JLabel("Usuario : " + booking.getUser().getNames() + " " + booking.getUser().getLastNames());
+		JLabel userLabel = new JLabel("Usuario : " + booking.getUser().getNames() + " " + booking.getUser().getLastNames());
 		userLabel.setBounds(180,180,180,20);
 		
-		roomLabel = new JLabel("Habitación: " + booking.getRoom().getId());
+		JLabel roomLabel = new JLabel("Habitación: " + booking.getRoom().getId());
 		roomLabel.setBounds(180,220,180,80);
 		
 		f.add(idBookingLabel);
@@ -50,7 +48,7 @@ public class BookingDetailsView {
 	
 	private void addButtons() {
 
-		editButton = new JButton("Editar");
+		JButton editButton = new JButton("Editar");
 		editButton.setBounds(200,200,100,20);
 		editButton.addActionListener(new ActionListener() {
         	@SuppressWarnings("unused")
@@ -61,7 +59,7 @@ public class BookingDetailsView {
         		
         });
 		
-		deleteButton = new JButton("Cancelar");
+		JButton deleteButton = new JButton("Cancelar");
 		deleteButton.setBounds(200,230,100,20);
 		deleteButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {

@@ -8,7 +8,6 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import controlador.RoomsController;
 import modelos.Room;
 import modelos.User;
 import views.widgets.RoomCellRenderer;
@@ -16,7 +15,6 @@ import views.widgets.RoomCellRenderer;
 
 public class RoomsView {
 	User user;
-	RoomsController roomsController = new RoomsController();
 	
 	public RoomsView(User user, List<Room> roomList) {
 		this.user = user;

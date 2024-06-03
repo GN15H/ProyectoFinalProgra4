@@ -31,11 +31,9 @@ public class BookView {
 	
 	private BookingsController bookingsController = new BookingsController();
 	
-	
 	JFrame f = new JFrame("Register"); 
 	JComboBox<String> roomTypeField;
 	JTextField guestAmountField, arrivalDateField, departureDateField;
-	
 	
 	public BookView(Room room, User user, Optional<Booking> booking) {	
 		this.room = room;
